@@ -14,7 +14,7 @@ function gh-pr-comment()
     return
   fi
 
-  if [ ${TRAVIS_PULL_REQUEST} != "false" ];
+  if [ "${TRAVIS_PULL_REQUEST}" != "false" ];
   then
     text=`echo "$2" | sed 's/\\\\/\\\\\\\\/g' | sed -n '1h;1!H;${x;s/\n/\\\\n/g;p;}' | sed 's/\"/\\\\"/g' | sed 's/\t/\\\\t/g' | sed 's/\//\\\\\//g'`
     curl -vs -X POST -H 'Content-Type:application/json' -d "{\"body\":\"## $1\n\n$text\"}" \
