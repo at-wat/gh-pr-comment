@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "####################################################" >&2
+echo "Shell-script version of gh-pr-comment is deprecated!" >&2
+echo "Use gh-pr-comment on PyPI instead." >&2
+echo "$ pip install gh_pr_comment." >&2
+echo "####################################################" >&2
+
 function gh-pr-comment()
 {
   if [ $# -lt 2 ];
