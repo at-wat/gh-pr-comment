@@ -4,11 +4,12 @@ python:
   - 3.6
 
 install:
-  - python setup.py install
   - pip install pycodestyle pyflakes
+  - ./tests/coding-style.sh
+  - python setup.py install
 
 script:
-  - true
+  - ./tests/exec-test.sh
 
 deploy:
   password:
