@@ -11,7 +11,7 @@ setup(
     install_requires=['requests'],
     entry_points={
         'console_scripts': [
-            'gh-pr-comment = gh_pr_comment.post:post_main',
+            'gh-pr-comment = gh_pr_comment.comment:post_main',
             'gh-pr-upload= gh_pr_comment.upload:post_main'
         ]
     },
