@@ -5,7 +5,13 @@ python:
 
 install:
   - python setup.py install
-  - pip install --user pycodestyle pyflakes
+  - pip install pycodestyle pyflakes
 
 script:
   - true
+
+deploy:
+  password:
+    secure: Abg3hVOGYXSXDEqyQarJjgLbtoIrNLsaald56fA9h0c88h/cmvUKwVHkEGkyZnfJZlT4CHiNHH3vsqC8cHTmkQLlp6kehrGzpUEagaoWCUkE7TR+z8c2HUwYNFU2mDs7TxlvRjOikluFsywjE6GBh0l4ueXMEiM4KBu/KwEpW5O9axvFjzF49o2znT/zPjhEmNHeLEF+pronm/QuR/91q/TIErHFV5ilV4a/zhp66VBUAyQ31yxC1bEV7iSsLHsiwJJIlJTovlgEHVq+j3pD7MoElmdkAAw74BMUXjO3+Ua44qbxfmfQayT6dpeyEPqipHF3Ej262eGuLyaie57oW/tZ6S3MDBEewIp5JC3i79+bZcJ06Btyf+iT75Gac4CSAiT2GCQ7G9O3dQwUFWpNeDDB1+GEZ/R+FWH4Uvwo+BPJi4DNf+UG5IObkGN6YPDxZabzbQxlbHO7vrwNCIiFKebep1bjv7VnMlXu2fqi7TZq9fgtw1N0ignuRcd0ZLr73YcWIF1EP1MfXvxirI1SL5P8GplbnRExCecVCpGGbFmViwgi4r4nlcKzr5bXMnzXDQrSBgTHhIhJJ5qvnvGLZxWfVtNbe5pH0js1ht08vSsKVa0XzlpjdKiWIFdc3vy626xVxKy3wMSS0XOqyuPuJCkqsiAb3wPqwvoOOFH+tso=
+  on:
+    tags: true
