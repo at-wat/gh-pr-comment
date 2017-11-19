@@ -5,8 +5,8 @@ python:
 
 install:
   - pip install pycodestyle pyflakes
-  - ./tests/coding-style.sh
   - python setup.py install
+  - ./tests/coding-style.sh
 
 script:
   - ./tests/exec-test.sh

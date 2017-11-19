@@ -1,9 +1,7 @@
 import sys
 import os
-import json
-import base64
 import requests
-import random
+
 
 def post_main():
     argv = sys.argv
@@ -16,6 +14,7 @@ def post_main():
         sys.exit(1)
 
     post(argv[1])
+
 
 def post(filename):
     if 'IMAGE_UPLOADER' not in os.environ:
@@ -42,11 +41,11 @@ def post(filename):
 def post_imgur(data):
     url = 'https://api.imgur.com/3/image?type=file'
     headers = {
-        'Authorization' : 'Client-ID ' + os.environ['IMGUR_CLIENT_ID']
+        'Authorization': 'Client-ID ' + os.environ['IMGUR_CLIENT_ID']
     }
 
     r = requests.post(url, data=data, headers=headers)
-    #sys.stderr.write(r.text)
+    # sys.stderr.write(r.text)
     response = r.json()
     if not response['success']:
         return None

@@ -1,8 +1,8 @@
 import sys
 import os
 import json
-import base64
 import requests
+
 
 def post_main():
     argv = sys.argv
@@ -23,6 +23,7 @@ def post_main():
         sys.exit(1)
 
     post(argv[1], argv[2])
+
 
 def post(title, contents):
     if 'TRAVIS_BOT_GITHUB_TOKEN' not in os.environ:
@@ -49,7 +50,7 @@ def post(title, contents):
         + os.environ['TRAVIS_PULL_REQUEST'] \
         + '/comments?access_token=' \
         + os.environ['TRAVIS_BOT_GITHUB_TOKEN']
-    headers = {"Content-Type" : "application/json"}
+    headers = {"Content-Type": "application/json"}
 
     body = {
         "body": '## %s' % title + '\n\n' + contents
