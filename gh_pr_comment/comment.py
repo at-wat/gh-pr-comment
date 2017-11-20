@@ -8,18 +8,18 @@ def post_main():
     argv = sys.argv
     if len(argv) < 3:
         sys.stderr.write(
-            'usage: gh-pr-comment title comment')
+            'usage: gh-pr-comment title comment\n')
         sys.stderr.write(
-            'env:')
+            'env:\n')
         sys.stderr.write(
             '- TRAVIS_REPO_SLUG       :'
-            + ' user/repos')
+            + ' user/repos\n')
         sys.stderr.write(
             '- TRAVIS_PULL_REQUEST    :'
-            + ' pull request number')
+            + ' pull request number\n')
         sys.stderr.write(
             '- TRAVIS_BOT_GITHUB_TOKEN:'
-            + ' token with comment write permission')
+            + ' token with comment write permission\n')
         sys.exit(1)
 
     post(argv[1], argv[2])
@@ -28,20 +28,20 @@ def post_main():
 def post(title, contents):
     if 'TRAVIS_BOT_GITHUB_TOKEN' not in os.environ:
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_BOT_GITHUB_TOKEN is not set.')
+            'gh-pr-comment: TRAVIS_BOT_GITHUB_TOKEN is not set.\n')
         sys.exit(1)
     if 'TRAVIS_REPO_SLUG' not in os.environ:
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_REPO_SLUG is not set.')
+            'gh-pr-comment: TRAVIS_REPO_SLUG is not set.\n')
         sys.exit(1)
     if 'TRAVIS_PULL_REQUEST' not in os.environ:
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_PULL_REQUEST is not set.')
+            'gh-pr-comment: TRAVIS_PULL_REQUEST is not set.\n')
         sys.exit(1)
 
     if os.environ['TRAVIS_PULL_REQUEST'] == 'false':
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_PULL_REQUEST is false.')
+            'gh-pr-comment: TRAVIS_PULL_REQUEST is false.\n')
         sys.exit(0)
 
     url = 'https://api.github.com/repos/' \

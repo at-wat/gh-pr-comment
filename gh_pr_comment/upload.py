@@ -6,11 +6,11 @@ import requests
 def post_main():
     argv = sys.argv
     if len(argv) < 2:
-        sys.stderr.write('usage: gh-pr-upload filename')
-        sys.stderr.write('env:')
-        sys.stderr.write('- IMAGE_UPLOADER : imgur(default)')
-        sys.stderr.write('- IMGUR_CLIENT_ID: custom-client-id')
-        sys.stderr.write('return: image url')
+        sys.stderr.write('usage: gh-pr-upload filename\n')
+        sys.stderr.write('env:\n')
+        sys.stderr.write('- IMAGE_UPLOADER : imgur(default)\n')
+        sys.stderr.write('- IMGUR_CLIENT_ID: custom-client-id\n')
+        sys.stderr.write('return: image url\n')
         sys.exit(1)
 
     post(argv[1])
@@ -28,11 +28,11 @@ def post(filename):
     if os.environ['IMAGE_UPLOADER'] == 'imgur':
         url = post_imgur(data)
     else:
-        sys.stderr.write('Unknown IMAGE_UPLOADER.')
+        sys.stderr.write('Unknown IMAGE_UPLOADER.\n')
         sys.exit(1)
 
     if url is None:
-        sys.stderr.write('Upload failed.')
+        sys.stderr.write('Upload failed.\n')
         sys.exit(1)
 
     print(url)
