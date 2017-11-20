@@ -1,23 +1,23 @@
 # gh-pr-comment
 
+Command line tool for GitHub pull-request (issue) comment.
+
 ## Usage
 
 ```
 $ gh-pr-comment title comment
 ```
 
-The script escapes special charactors for json encoding.
+## Install
+
+```
+$ pip install gh-pr-comment
+```
 
 ## Required environment variables
 
-- ***TRAVIS\_REPO\_SLUG*** = user/repos
-- ***TRAVIS\_PULL\_REQUEST*** = pull request number
-- ***TRAVIS\_BOT\_GITHUB\_TOKEN*** = token with comment write permission
+- ***TRAVIS\_REPO\_SLUG***: user/repos
+- ***TRAVIS\_PULL\_REQUEST***: pull request number
+- ***TRAVIS\_BOT\_GITHUB\_TOKEN***: token with comment write permission
 
-## Usage in your package
-
-```
-$ wget -q https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/gh-pr-comment.sh
-$ source gh-pr-comment.sh
-```
-
+Two of first variables are automatically set by Travis-CI on pull-request builds.
