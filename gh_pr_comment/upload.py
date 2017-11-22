@@ -10,8 +10,11 @@ def post_main():
     if len(argv) < 2:
         sys.stderr.write('usage: gh-pr-upload filename\n')
         sys.stderr.write('env:\n')
-        sys.stderr.write('- IMAGE_UPLOADER: imgur(default), s3(optional, need boto3)\n')
-        sys.stderr.write('- ALLOW_PUBLIC_UPLOADER: set it to enable public uploader\n')
+        sys.stderr.write('- IMAGE_UPLOADER: '
+                         + 'imgur(default), '
+                         + 's3(optional, need boto3)\n')
+        sys.stderr.write('- ALLOW_PUBLIC_UPLOADER: '
+                         + 'set it to enable public uploader\n')
         sys.stderr.write('env for imgur:\n')
         sys.stderr.write('- IMGUR_CLIENT_ID: custom-client-id\n')
         sys.stderr.write('env for s3:\n')
@@ -71,7 +74,6 @@ def post_s3(data, ext, mime):
     except ImportError:
         sys.stderr.write('boto3 is not available.\n')
         sys.exit(1)
-
 
     if 'AWS_S3_BUCKET' not in os.environ:
         sys.stderr.write('AWS_S3_BUCKET is not specified.\n')
