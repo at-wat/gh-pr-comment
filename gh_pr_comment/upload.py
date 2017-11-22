@@ -55,6 +55,11 @@ def post(filename):
 
 
 def post_imgur(data):
+    if 'ALLOW_PUBLIC_UPLOADER' not in os.environ:
+        sys.stderr.write('Public uploader is not enabled.')
+        sys.stderr.write('Set ALLOW_PUBLIC_UPLOADER to enable.')
+        sys.exit(1)
+
     url = 'https://api.imgur.com/3/image?type=file'
     headers = {
         'Authorization': 'Client-ID ' + os.environ['IMGUR_CLIENT_ID']
