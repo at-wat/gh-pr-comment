@@ -47,7 +47,7 @@ def post(title, contents):
 
     if 'TRAVIS_PULL_REQUEST_SLUG' in os.environ:
         slug = os.environ['TRAVIS_PULL_REQUEST_SLUG']
-    else
+    else:
         slug = os.environ['TRAVIS_REPO_SLUG']
             
     url = 'https://api.github.com/repos/' \
