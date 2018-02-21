@@ -16,7 +16,7 @@ $ pip install gh-pr-comment
 
 ## Required environment variables
 
-- ***TRAVIS\_REPO\_SLUG***: user/repos
+- ***TRAVIS\_PULL\_REQUEST\_SLUG***: owner/repos
 - ***TRAVIS\_PULL\_REQUEST***: pull request number
 - ***TRAVIS\_BOT\_GITHUB\_TOKEN***: token with comment write permission
 
