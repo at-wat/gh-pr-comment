@@ -12,13 +12,13 @@ def post_main():
         sys.stderr.write(
             'env:\n')
         sys.stderr.write(
-            '- TRAVIS_REPO_SLUG       :'
-            + ' user/repos\n')
+            '- TRAVIS_PULL_REQUEST_SLUG :'
+            + ' owner/repos\n')
         sys.stderr.write(
-            '- TRAVIS_PULL_REQUEST    :'
+            '- TRAVIS_PULL_REQUEST      :'
             + ' pull request number\n')
         sys.stderr.write(
-            '- TRAVIS_BOT_GITHUB_TOKEN:'
+            '- TRAVIS_BOT_GITHUB_TOKEN  :'
             + ' token with comment write permission\n')
         sys.exit(1)
 
@@ -30,9 +30,9 @@ def post(title, contents):
         sys.stderr.write(
             'gh-pr-comment: TRAVIS_BOT_GITHUB_TOKEN is not set.\n')
         sys.exit(1)
-    if 'TRAVIS_REPO_SLUG' not in os.environ:
+    if 'TRAVIS_PULL_REQUEST_SLUG' not in os.environ:
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_REPO_SLUG is not set.\n')
+            'gh-pr-comment: TRAVIS_PULL_REQUEST_SLUG is not set.\n')
         sys.exit(1)
     if 'TRAVIS_PULL_REQUEST' not in os.environ:
         sys.stderr.write(
@@ -45,7 +45,7 @@ def post(title, contents):
         sys.exit(0)
 
     url = 'https://api.github.com/repos/' \
-        + os.environ['TRAVIS_REPO_SLUG'] \
+        + os.environ['TRAVIS_PULL_REQUEST_SLUG'] \
         + '/issues/' \
         + os.environ['TRAVIS_PULL_REQUEST'] \
         + '/comments?access_token=' \
