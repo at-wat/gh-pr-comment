@@ -50,13 +50,20 @@ def post(title, contents):
     else:
         slug = os.environ['TRAVIS_REPO_SLUG']
 
-    url = 'https://api.github.com/repos/' \
+    if 'GITHUB_API_URL_BASE' in os.environ:
+        url_base = os.environ['GITHUB_API_URL_BASE']
+    else:
+        url_base = 'https://api.github.com'
+
+    url = url_base + '/repos/' \
         + slug \
         + '/issues/' \
         + os.environ['TRAVIS_PULL_REQUEST'] \
-        + '/comments?access_token=' \
-        + os.environ['TRAVIS_BOT_GITHUB_TOKEN']
-    headers = {"Content-Type": "application/json"}
+        + '/comments'
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "token " + os.environ['TRAVIS_BOT_GITHUB_TOKEN']
+    }
 
     body = {
         "body": '## %s' % title + '\n\n' + contents
