@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gh_pr_comment',
-    version='0.3.0',
+    version='0.4.0',
     description='GitHub PR comment post',
     url='https://github.com/at-wat/gh-pr-comment',
     author='Atsushi Watanabe',
