@@ -21,3 +21,5 @@ $ pip install gh-pr-comment
 - ***TRAVIS\_BOT\_GITHUB\_TOKEN***: token with comment write permission
 
 Two of first variables are automatically set by Travis-CI on pull-request builds.
+
+## Testing
