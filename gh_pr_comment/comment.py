@@ -57,7 +57,7 @@ def post(title, contents):
     else:
         url_base = 'https://api.github.com'
 
-    token = (os.environ['TRAVIS_PULL_REQUEST']
+    token = (os.environ['TRAVIS_BOT_GITHUB_TOKEN']
              if 'TRAVIS_BOT_GITHUB_TOKEN' in os.environ
              else os.environ['GITHUB_TOKEN'])
     url = url_base + '/repos/' \
@@ -67,7 +67,7 @@ def post(title, contents):
         + '/comments'
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "token " + os.environ['TRAVIS_BOT_GITHUB_TOKEN']
+        "Authorization": "token " + token
     }
 
     body = {
