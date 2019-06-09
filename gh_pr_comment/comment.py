@@ -75,4 +75,4 @@ def post(title, contents):
     }
 
     r = requests.post(url, data=json.dumps(body), headers=headers)
-    print(r.text)
+    print(r.text.encode('utf-8'))
