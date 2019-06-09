@@ -10,18 +10,18 @@ def post_main():
     if len(argv) < 2:
         sys.stderr.write('usage: gh-pr-upload filename\n')
         sys.stderr.write('env:\n')
-        sys.stderr.write('- IMAGE_UPLOADER: '
+        sys.stderr.write('  IMAGE_UPLOADER: '
                          + 'imgur(default), '
                          + 's3(optional, need boto3)\n')
-        sys.stderr.write('- ALLOW_PUBLIC_UPLOADER: '
+        sys.stderr.write('  ALLOW_PUBLIC_UPLOADER: '
                          + 'set it to enable public uploader\n')
         sys.stderr.write('env for imgur:\n')
-        sys.stderr.write('- IMGUR_CLIENT_ID: custom-client-id\n')
+        sys.stderr.write('  IMGUR_CLIENT_ID: custom-client-id\n')
         sys.stderr.write('env for s3:\n')
-        sys.stderr.write('- AWS_DEFAULT_REGION\n')
-        sys.stderr.write('- AWS_ACCESS_KEY_ID\n')
-        sys.stderr.write('- AWS_SECRET_ACCESS_KEY\n')
-        sys.stderr.write('- AWS_S3_BUCKET\n')
+        sys.stderr.write('  AWS_DEFAULT_REGION\n')
+        sys.stderr.write('  AWS_ACCESS_KEY_ID\n')
+        sys.stderr.write('  AWS_SECRET_ACCESS_KEY\n')
+        sys.stderr.write('  AWS_S3_BUCKET\n')
         sys.stderr.write('return: image url\n')
         sys.exit(1)
 

@@ -12,23 +12,25 @@ def post_main():
         sys.stderr.write(
             'env:\n')
         sys.stderr.write(
-            '- TRAVIS_PULL_REQUEST_SLUG :'
-            + ' owner/repos (TRAVIS_REPO_SLUG is used if not set)\n')
+            '  TRAVIS_PULL_REQUEST_SLUG:\n'
+            + '    owner/repos (TRAVIS_REPO_SLUG is used if not set)\n')
         sys.stderr.write(
-            '- TRAVIS_PULL_REQUEST      :'
-            + ' pull request number\n')
+            '  TRAVIS_PULL_REQUEST:\n'
+            + '    pull request number\n')
         sys.stderr.write(
-            '- TRAVIS_BOT_GITHUB_TOKEN  :'
-            + ' token with comment write permission\n')
+            '  TRAVIS_BOT_GITHUB_TOKEN or GITHUB_TOKEN:\n'
+            + '    token with comment write permission\n')
         sys.exit(1)
 
     post(argv[1], argv[2])
 
 
 def post(title, contents):
-    if 'TRAVIS_BOT_GITHUB_TOKEN' not in os.environ:
+    if 'TRAVIS_BOT_GITHUB_TOKEN' not in os.environ \
+            and 'GITHUB_TOKEN' not in os.environ:
         sys.stderr.write(
-            'gh-pr-comment: TRAVIS_BOT_GITHUB_TOKEN is not set.\n')
+            'gh-pr-comment: '
+            + 'neither TRAVIS_BOT_GITHUB_TOKEN nor GITHUB_TOKEN is not set.\n')
         sys.exit(1)
     if 'TRAVIS_PULL_REQUEST_SLUG' not in os.environ:
         if 'TRAVIS_REPO_SLUG' not in os.environ:
@@ -55,6 +57,9 @@ def post(title, contents):
     else:
         url_base = 'https://api.github.com'
 
+    token = (os.environ['TRAVIS_BOT_GITHUB_TOKEN']
+             if 'TRAVIS_BOT_GITHUB_TOKEN' in os.environ
+             else os.environ['GITHUB_TOKEN'])
     url = url_base + '/repos/' \
         + slug \
         + '/issues/' \
@@ -62,7 +67,7 @@ def post(title, contents):
         + '/comments'
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "token " + os.environ['TRAVIS_BOT_GITHUB_TOKEN']
+        "Authorization": "token " + token
     }
 
     body = {
