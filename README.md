@@ -18,6 +18,6 @@ $ pip install gh-pr-comment
 
 - ***TRAVIS\_PULL\_REQUEST\_SLUG***: owner/repos
 - ***TRAVIS\_PULL\_REQUEST***: pull request number
-- ***TRAVIS\_BOT\_GITHUB\_TOKEN***: token with comment write permission
+- ***TRAVIS\_BOT\_GITHUB\_TOKEN*** or ***GITHUB\_TOKEN***: token with comment write permission
 
 Two of first variables are automatically set by Travis-CI on pull-request builds.
