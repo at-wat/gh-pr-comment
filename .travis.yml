@@ -2,6 +2,14 @@ language: python
 python:
   - 2.7
   - 3.6
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      env: TRAVIS_OS_DIST=trusty
+    - os: linux
+      dist: xenial
+      env: TRAVIS_OS_DIST=xenial
 
 install:
   - pip install pycodestyle pyflakes
