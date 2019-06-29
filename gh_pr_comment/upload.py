@@ -43,6 +43,8 @@ def post(filename):
         url = post_imgur(data)
     elif os.environ['IMAGE_UPLOADER'] == 's3':
         url = post_s3(data, ext, mime[0])
+    elif os.environ['IMAGE_UPLOADER'] == 'test':
+        url = post_test(data)
     else:
         sys.stderr.write('Unknown IMAGE_UPLOADER.\n')
         sys.exit(1)
@@ -100,3 +102,18 @@ def post_s3(data, ext, mime):
 
     return 'https://s3-%s.amazonaws.com/%s/%s' \
         % (os.environ['AWS_DEFAULT_REGION'], bucket_name, path)
+
+
+def post_test(data):
+    if 'ALLOW_PUBLIC_UPLOADER' not in os.environ:
+        sys.stderr.write('Public uploader is not enabled.\n')
+        sys.stderr.write('Set ALLOW_PUBLIC_UPLOADER to enable.\n')
+        sys.exit(1)
+
+    url = 'http://devnull-as-a-service.com/dev/null'
+
+    r = requests.post(url, data=data)
+    sys.stderr.write(r.text)
+    if r.status_code == 200:
+        return '#'
+    return None
