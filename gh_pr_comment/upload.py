@@ -110,7 +110,7 @@ def post_test(data):
         sys.stderr.write('Set ALLOW_PUBLIC_UPLOADER to enable.\n')
         sys.exit(1)
 
-    url = 'https://devnull-as-a-service.com/dev/null'
+    url = 'http://devnull-as-a-service.com/dev/null'
 
     r = requests.post(url, data=data, headers=headers)
     sys.stderr.write(r.text)
