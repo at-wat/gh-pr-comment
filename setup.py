@@ -8,10 +8,7 @@ setup(
     author='Atsushi Watanabe',
     author_email='atsushi.w@ieee.org',
     packages=find_packages(exclude=['tests']),
-    install_requires=[
-        'requests',
-        'urllib3<=1.23;python_version<"3.0"'
-    ],
+    install_requires=['requests'],
     entry_points={
         'console_scripts': [
             'gh-pr-comment = gh_pr_comment.comment:post_main',
