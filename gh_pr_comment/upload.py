@@ -112,7 +112,7 @@ def post_test(data):
 
     url = 'http://devnull-as-a-service.com/dev/null'
 
-    r = requests.post(url, data=data, headers=headers)
+    r = requests.post(url, data=data)
     sys.stderr.write(r.text)
     if r.status_code == 200:
         return '#'
