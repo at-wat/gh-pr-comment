@@ -1,4 +1,4 @@
-package main
+package uploader
 
 import (
 	"encoding/json"
@@ -15,53 +15,53 @@ import (
 	"github.com/google/uuid"
 )
 
-type uploaderType string
+type UploaderType string
 
 const (
-	uploaderInvalid uploaderType = ""
-	uploaderImgur   uploaderType = "imgur"
-	uploaderS3      uploaderType = "s3"
-	uploaderTest    uploaderType = "test"
+	UploaderInvalid UploaderType = ""
+	UploaderImgur   UploaderType = "imgur"
+	UploaderS3      UploaderType = "s3"
+	UploaderTest    UploaderType = "test"
 )
 
-const defaultUploader = uploaderImgur
+const DefaultUploader = UploaderImgur
 
-func newUploaderType(typ string) (uploaderType, error) {
-	switch uploaderType(typ) {
-	case uploaderImgur, uploaderS3, uploaderTest:
-		return uploaderType(typ), nil
+func NewUploaderType(typ string) (UploaderType, error) {
+	switch UploaderType(typ) {
+	case UploaderImgur, UploaderS3, UploaderTest:
+		return UploaderType(typ), nil
 	default:
-		return uploaderInvalid, errors.New("unknown uploader")
+		return UploaderInvalid, errors.New("unknown Uploader")
 	}
 }
 
-func (u uploaderType) Public() bool {
+func (u UploaderType) Public() bool {
 	switch u {
-	case uploaderImgur:
+	case UploaderImgur:
 		return true
-	case uploaderTest:
+	case UploaderTest:
 		return true
 	default:
 		return false
 	}
 }
 
-func (u uploaderType) Uploader() uploader {
+func (u UploaderType) Uploader() Uploader {
 	switch u {
-	case uploaderImgur:
+	case UploaderImgur:
 		return uploadImgur
-	case uploaderS3:
+	case UploaderS3:
 		return uploadS3
-	case uploaderTest:
+	case UploaderTest:
 		return uploadTest
 	default:
-		panic("invalid uploader")
+		panic("invalid Uploader")
 	}
 }
 
-type uploader func(string) error
+type Uploader func(string) error
 
-func (u uploader) Upload(filename string) error {
+func (u Uploader) Upload(filename string) error {
 	return u(filename)
 }
 

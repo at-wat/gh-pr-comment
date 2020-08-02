@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/at-wat/gh-pr-comment/cmd/gh-pr-upload/uploader"
 )
 
 func main() {
@@ -12,10 +14,10 @@ func main() {
 	}
 	filename := os.Args[1]
 
-	var ut = defaultUploader
+	var ut = uploader.DefaultUploader
 	if t, ok := os.LookupEnv("IMAGE_UPLOADER"); ok {
 		var err error
-		ut, err = newUploaderType(t)
+		ut, err = uploader.NewUploaderType(t)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error: failed to parse IMAGE_UPLOADER: %v\n", err)
 			os.Exit(1)
