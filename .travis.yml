@@ -20,6 +20,8 @@ install:
   - go build -ldflags="-s -w" ./cmd/gh-pr-upload
   - upx ./gh-pr-comment
   - upx ./gh-pr-upload
+  - sudo cp ./gh-pr-comment /usr/local/bin/
+  - sudo cp ./gh-pr-upload /usr/local/bin/
 
 script:
   - go vet ./...
