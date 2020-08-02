@@ -9,7 +9,7 @@ builds:
     goarch:
       - amd64
       - arm64
-    main: ./cmd/gh-pr-comment/main.go
+    main: ./cmd/gh-pr-comment/
     binary: gh-pr-comment
     ldflags:
       - "-s -w"
@@ -23,7 +23,7 @@ builds:
     goarch:
       - amd64
       - arm64
-    main: ./cmd/gh-pr-upload/main.go
+    main: ./cmd/gh-pr-upload/
     binary: gh-pr-upload
     ldflags:
       - "-s -w"
