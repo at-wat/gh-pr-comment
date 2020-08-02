@@ -17,7 +17,9 @@ env:
 
 install:
   - go build -ldflags="-s -w" ./cmd/gh-pr-comment
+  - go build -ldflags="-s -w" ./cmd/gh-pr-upload
   - upx ./gh-pr-comment
+  - upx ./gh-pr-upload
 
 script:
   - go vet ./...
