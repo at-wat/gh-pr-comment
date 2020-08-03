@@ -5,6 +5,18 @@ import requests
 
 
 def post_main():
+    color_start = '\033[31m' if sys.stderr.isatty() else ''
+    color_end = '\033[0m' if sys.stderr.isatty() else ''
+    sys.stderr.write(
+        color_start
+        + '**********************************************\n'
+        + '             DEPRECATION WARNING\n'
+        + ' gh-pr-comment on PyPi (pip) is deprecated!\n'
+        + ' Please use the new version of gh-pr-comment.\n'
+        + ' See https://github.com/at-wat/gh-pr-comment/\n'
+        + '**********************************************'
+        + color_end + '\n\n')
+
     argv = sys.argv
     if len(argv) < 3:
         sys.stderr.write(
