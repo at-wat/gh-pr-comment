@@ -32,6 +32,8 @@ then
   api_auth="-H \"Authorization: token ${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN}}\""
 fi
 
+gh_api_base=${GITHUB_API_URL_BASE:-https://api.github.com}
+
 tag=${1:-latest}
 rel=
 if [ ${tag} = "latest" ]
@@ -39,12 +41,12 @@ then
   rel=$(eval curl \
     ${api_auth} \
     -s --retry 4 \
-    https://api.github.com/repos/at-wat/gh-pr-comment/releases/latest)
+    ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/latest)
 else
   rel=$(eval curl \
     ${api_auth} \
     -s --retry 4 \
-    https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
+    ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/tags/${tag})
 fi
 
 url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
