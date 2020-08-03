@@ -44,7 +44,10 @@ then
 fi
 
 tmpdir=$(mktemp -d)
+dir=${2:-~/.local/bin/}
 curl -sL ${url} | tar xzfv - -C ${tmpdir}/
-cp ${tmpdir}/gh-pr-comment ${2:-~/.local/bin/}
-cp ${tmpdir}/gh-pr-upload ${2:-~/.local/bin/}
+
+mkdir -p ${dir}
+cp ${tmpdir}/gh-pr-comment ${dir}
+cp ${tmpdir}/gh-pr-upload ${dir}
 rm -rf ${tmpdir}
