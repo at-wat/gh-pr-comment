@@ -30,9 +30,9 @@ tag=${1:-latest}
 rel=
 if [ ${tag} = "latest" ]
 then
-  rel=$(curl -s https://api.github.com/repos/at-wat/gh-pr-comment/releases/latest)
+  rel=$(curl -s --retry 4 https://api.github.com/repos/at-wat/gh-pr-comment/releases/latest)
 else
-  rel=$(curl -s https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
+  rel=$(curl -s --retry 4 https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
 fi
 
 url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
