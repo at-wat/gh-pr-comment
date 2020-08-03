@@ -35,24 +35,16 @@ else
   rel=$(curl -s https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
 fi
 
-echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | while read url
-do
-  if echo ${url} | grep -q "_${os}_${arch}${ext}"
-  then
-    echo ${url} 
-    tmpdir=$(mktemp -d)
-    curl -sL ${url} | tar xzfv - -C ${tmpdir}/
-    cp ${tmpdir}/gh-pr-comment ${2:-~/.local/bin/}
-    cp ${tmpdir}/gh-pr-upload ${2:-~/.local/bin/}
-    rm -rf ${tmpdir}
-    exit 99
-  fi
-done
-
-if [ $? -eq 99 ]
+url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
+echo ${url} 
+if [ -z "${url}" ]
 then
-  exit 0
+  echo "supported binary not found" >&2
+  exit 1
 fi
 
-echo "supported binary not found" >&2
-exit 1
+tmpdir=$(mktemp -d)
+curl -sL ${url} | tar xzfv - -C ${tmpdir}/
+cp ${tmpdir}/gh-pr-comment ${2:-~/.local/bin/}
+cp ${tmpdir}/gh-pr-upload ${2:-~/.local/bin/}
+rm -rf ${tmpdir}
