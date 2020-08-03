@@ -1,0 +1,45 @@
+builds:
+  - id: gh-pr-comment
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    main: ./cmd/gh-pr-comment/main.go
+    binary: gh-pr-comment
+    ldflags:
+      - "-s -w"
+    hooks:
+      post:
+        - upx "{{ .Path }}"
+  - id: gh-pr-upload
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    main: ./cmd/gh-pr-upload/main.go
+    binary: gh-pr-upload
+    ldflags:
+      - "-s -w"
+    hooks:
+      post:
+        - upx "{{ .Path }}"
+archives:
+  - builds:
+      - gh-pr-comment
+      - gh-pr-upload
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: 'checksums.txt'

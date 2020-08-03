@@ -1,4 +1,7 @@
-*.egg-info
-*.pyc
-build
+gh-pr-comment
+gh-pr-upload
+!cmd/gh-pr-comment
+!cmd/gh-pr-upload
+gh-pr-comment.upx
+gh-pr-upload.upx
 dist

@@ -1,22 +1,40 @@
-dist: xenial
-language: python
-python:
-  - 2.7
-  - 3.6
+dist: focal
+language: go
+go: 1.14
+branches:
+  only:
+    - master
+    - "/^[0-9]+\\.[0-9]+\\.[0-9]+/"
+    - "/^deploy-test/"
+
+addons:
+  apt:
+    packages:
+      - upx-ucl
+
+env:
+  global:
+    - CGO_ENABLED=0
 
 install:
-  - pip install pycodestyle pyflakes
-  - python setup.py install
-  - ./tests/coding-style.sh
+  - go build -ldflags="-s -w" ./cmd/gh-pr-comment
+  - go build -ldflags="-s -w" ./cmd/gh-pr-upload
+  - upx ./gh-pr-comment
+  - upx ./gh-pr-upload
+  - sudo cp ./gh-pr-comment /usr/local/bin/
+  - sudo cp ./gh-pr-upload /usr/local/bin/
 
 script:
-  - ./tests/exec-test.sh
+  - go vet ./...
+  - go test ./...
+  - .ci/upload-test.sh
+  - curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
+
+before_deploy:
+  - export GITHUB_TOKEN=${GITHUB_TOKEN_DEPLOY}
 
 deploy:
-  provider: pypi
-  user: at-wat
-  password:
-    secure: Abg3hVOGYXSXDEqyQarJjgLbtoIrNLsaald56fA9h0c88h/cmvUKwVHkEGkyZnfJZlT4CHiNHH3vsqC8cHTmkQLlp6kehrGzpUEagaoWCUkE7TR+z8c2HUwYNFU2mDs7TxlvRjOikluFsywjE6GBh0l4ueXMEiM4KBu/KwEpW5O9axvFjzF49o2znT/zPjhEmNHeLEF+pronm/QuR/91q/TIErHFV5ilV4a/zhp66VBUAyQ31yxC1bEV7iSsLHsiwJJIlJTovlgEHVq+j3pD7MoElmdkAAw74BMUXjO3+Ua44qbxfmfQayT6dpeyEPqipHF3Ej262eGuLyaie57oW/tZ6S3MDBEewIp5JC3i79+bZcJ06Btyf+iT75Gac4CSAiT2GCQ7G9O3dQwUFWpNeDDB1+GEZ/R+FWH4Uvwo+BPJi4DNf+UG5IObkGN6YPDxZabzbQxlbHO7vrwNCIiFKebep1bjv7VnMlXu2fqi7TZq9fgtw1N0ignuRcd0ZLr73YcWIF1EP1MfXvxirI1SL5P8GplbnRExCecVCpGGbFmViwgi4r4nlcKzr5bXMnzXDQrSBgTHhIhJJ5qvnvGLZxWfVtNbe5pH0js1ht08vSsKVa0XzlpjdKiWIFdc3vy626xVxKy3wMSS0XOqyuPuJCkqsiAb3wPqwvoOOFH+tso=
-  on:
-    tags: true
-    python: 3.6
+  - provider: script
+    script: curl -sL https://git.io/goreleaser | bash
+    on:
+      tags: true
