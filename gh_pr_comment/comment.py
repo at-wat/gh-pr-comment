@@ -14,7 +14,8 @@ def post_main():
         + ' gh-pr-comment on PyPi (pip) is deprecated!\n'
         + ' Please use the new version of gh-pr-comment.\n'
         + ' See https://github.com/at-wat/gh-pr-comment/\n'
-        + '**********************************************' + color_end + '\n\n')
+        + '**********************************************'
+        + color_end + '\n\n')
 
     argv = sys.argv
     if len(argv) < 3:
