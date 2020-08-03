@@ -11,8 +11,17 @@ $ gh-pr-comment title comment
 ## Install
 
 ### Download compiled binary
-```
+```shell
+# Install latest version under ~/.local/bin
 $ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install.sh | sh -s
+
+# Install latest version under /path/to/bin
+$ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install.sh \
+  | sh -s latest /path/to/bin
+
+# Install specific version under /usr/local/bin
+$ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install.sh \
+  | sh -s v0.5.0 /path/to/bin
 ```
 
 ## Required environment variables
