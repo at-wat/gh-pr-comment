@@ -16,6 +16,18 @@ import (
 func main() {
 	if len(os.Args) < 3 {
 		fmt.Fprintf(os.Stderr, "usage: %s title comment\n", os.Args[0])
+		fmt.Fprint(os.Stderr, `env:
+  GITHUB_TOKEN (or TRAVIS_BOT_GITHUB_TOKEN):
+    token with comment write permission
+
+env for Travis-CI:
+  TRAVIS:
+    must be true
+  TRAVIS_PULL_REQUEST_SLUG:
+    owner/repos (TRAVIS_REPO_SLUG is used if not set)
+  TRAVIS_PULL_REQUEST:
+    pull request number
+`)
 		os.Exit(1)
 	}
 	title := os.Args[1]
