@@ -10,6 +10,7 @@ $ gh-pr-comment title comment
 
 ## Install
 
+### Download compiled binary
 ```
 $ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install.sh | sh -s
 ```
