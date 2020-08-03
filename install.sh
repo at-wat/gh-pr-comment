@@ -26,13 +26,25 @@ case $(uname -s) in
     ;;
 esac
 
+api_auth=
+if [ -n "${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN}}" ]
+then
+  api_auth="-H \"Authorization: token ${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN}}\""
+fi
+
 tag=${1:-latest}
 rel=
 if [ ${tag} = "latest" ]
 then
-  rel=$(curl -s --retry 4 https://api.github.com/repos/at-wat/gh-pr-comment/releases/latest)
+  rel=$(eval curl \
+    ${api_auth} \
+    -s --retry 4 \
+    https://api.github.com/repos/at-wat/gh-pr-comment/releases/latest)
 else
-  rel=$(curl -s --retry 4 https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
+  rel=$(eval curl \
+    ${api_auth} \
+    -s --retry 4 \
+    https://api.github.com/repos/at-wat/gh-pr-comment/releases/tags/${tag})
 fi
 
 url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
