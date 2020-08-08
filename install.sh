@@ -27,7 +27,7 @@ case $(uname -s) in
 esac
 
 api_auth=
-if [ -n "${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN}}" ]
+if [ -n "${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN:-}}" ]
 then
   api_auth="-H \"Authorization: token ${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN}}\""
 fi
