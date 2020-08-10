@@ -13,9 +13,6 @@ builds:
     binary: gh-pr-comment
     ldflags:
       - "-s -w"
-    hooks:
-      post:
-        - upx "{{ .Path }}"
   - id: gh-pr-upload
     env:
       - CGO_ENABLED=0
@@ -30,9 +27,6 @@ builds:
     binary: gh-pr-upload
     ldflags:
       - "-s -w"
-    hooks:
-      post:
-        - upx "{{ .Path }}"
 archives:
   - builds:
       - gh-pr-comment
