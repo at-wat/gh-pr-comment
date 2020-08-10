@@ -20,7 +20,7 @@ jobs:
           packages:
             - curl-openssl
       before_install:
-        - echo 'export PATH="/usr/local/opt/curl-openssl/bin:$PATH"' >> ${HOME}/.bash_profile
+        - export PATH="/usr/local/opt/curl-openssl/bin:${PATH}"
     - stage: deploy
       install: skip
       script: skip
