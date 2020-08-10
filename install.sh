@@ -63,7 +63,7 @@ fi
 curl_err_file=$(mktemp)
 rel=$(eval curl \
   ${api_auth} \
-  -s -S --retry 4 \
+  -sSL --retry 4 \
   ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/${ep} 2> ${curl_err_file} || true)
 curl_err="$(cat ${curl_err_file})"
 rm -f ${curl_err_file}
@@ -73,7 +73,14 @@ then
   exit 1
 fi
 
-url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
+echo "_${os}_${arch}${ext}"
+echo "---"
+echo "$rel"
+echo "---"
+
+url=$(echo "${rel}" \
+  | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' \
+  | grep -e "_${os}_${arch}${ext}$" | head -n1)
 echo ${url} 
 if [ -z "${url}" ]
 then
@@ -83,7 +90,7 @@ fi
 
 tmpdir=$(mktemp -d)
 dir=${2:-~/.local/bin/}
-curl -sL ${url} | tar xzfv - -C ${tmpdir}/
+curl -sSL ${url} | tar xzfv - -C ${tmpdir}/
 
 mkdir -p ${dir}
 cp ${tmpdir}/gh-pr-comment ${dir}
