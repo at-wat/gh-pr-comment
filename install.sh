@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -eu
-set -x
 
 arch=
 case $(uname -m) in
