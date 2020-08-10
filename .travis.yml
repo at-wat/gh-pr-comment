@@ -56,6 +56,8 @@ script:
     fi
   # Test install script
   - which sh
+  - uname -m
+  - uname -s
   - ./install.sh
   - test -x ${HOME}/.local/bin/gh-pr-comment
   - test -x ${HOME}/.local/bin/gh-pr-upload
