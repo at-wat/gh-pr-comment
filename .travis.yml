@@ -20,7 +20,7 @@ jobs:
           packages:
             - curl-openssl
       before_install:
-        - brew link curl-openssl --force
+        - echo 'export PATH="/usr/local/opt/curl-openssl/bin:$PATH"' >> ${HOME}/.bash_profile
     - stage: deploy
       install: skip
       script: skip
