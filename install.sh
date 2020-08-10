@@ -54,6 +54,7 @@ gh_api_base=${GITHUB_API_URL_BASE:-https://api.github.com}
 tag=${1:-latest}
 ep=latest
 if [ "${tag}" != "latest" ]
+then
   ep=tags/${tag}
 fi
 
