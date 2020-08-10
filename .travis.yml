@@ -1,9 +1,5 @@
 language: go
 go: 1.14
-os:
-  - linux
-  - macos
-dist: bionic
 branches:
   only:
     - master
@@ -15,7 +11,7 @@ jobs:
       arch: amd64
     - os: linux
       arch: arm64
-    - os: macos
+    - os: osx
     - stage: deploy
       install: skip
       script: skip
