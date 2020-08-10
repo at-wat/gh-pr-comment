@@ -37,6 +37,13 @@ case $(uname -s) in
     ;;
 esac
 
+# Check required commands.
+if ! which curl > /dev/null 2> /dev/null
+then
+  echo "curl not found" >&2
+  exit 1
+fi
+
 api_auth=
 if [ -n "${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN:-}}" ]
 then
@@ -46,19 +53,17 @@ fi
 gh_api_base=${GITHUB_API_URL_BASE:-https://api.github.com}
 
 tag=${1:-latest}
-rel=
+ep=
 if [ ${tag} = "latest" ]
 then
-  rel=$(eval curl \
-    ${api_auth} \
-    -s --retry 4 \
-    ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/latest)
+  ep=latest
 else
-  rel=$(eval curl \
-    ${api_auth} \
-    -s --retry 4 \
-    ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/tags/${tag})
+  ep=tags/${tag}
 fi
+rel=$(eval curl \
+  ${api_auth} \
+  -s --retry 4 \
+  ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/${ep})
 
 url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
 echo ${url} 
