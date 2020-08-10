@@ -42,7 +42,7 @@ script:
   # GoReleaser config check
   - curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
   # Test install script
-  - ./install
+  - ./install.sh
   - test -x ${HOME}/.local/bin/gh-pr-comment
   - test -x ${HOME}/.local/bin/gh-pr-upload
 
