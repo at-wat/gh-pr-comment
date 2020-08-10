@@ -52,11 +52,8 @@ fi
 gh_api_base=${GITHUB_API_URL_BASE:-https://api.github.com}
 
 tag=${1:-latest}
-ep=
-if [ ${tag} = "latest" ]
-then
-  ep=latest
-else
+ep=latest
+if [ "${tag}" != "latest" ]
   ep=tags/${tag}
 fi
 
@@ -76,11 +73,11 @@ fi
 echo "_${os}_${arch}${ext}"
 echo "---"
 echo "$rel" \
-  | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p'
+  | sed -n 's/.*"browser_download_url":[ \t\r\n]*"\([^"]*\)"/\1/p'
 echo "---"
 
 url=$(echo "${rel}" \
-  | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' \
+  | sed -n 's/.*"browser_download_url":[ \t\r\n]*"\([^"]*\)"/\1/p' \
   | grep -e "_${os}_${arch}${ext}$" | head -n1)
 echo ${url} 
 if [ -z "${url}" ]
