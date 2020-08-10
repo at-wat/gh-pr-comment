@@ -40,7 +40,11 @@ script:
   # E2E test
   - .ci/upload-test.sh
   # GoReleaser config check
-  - curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "linux" ]
+    then
+      curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
+    fi
   # Test install script
   - ./install.sh
   - test -x ${HOME}/.local/bin/gh-pr-comment
