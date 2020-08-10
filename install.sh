@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -eu
-set -x
 
 arch=
 case $(uname -m) in
@@ -60,10 +59,19 @@ then
 else
   ep=tags/${tag}
 fi
+
+curl_err_file=$(mktemp)
 rel=$(eval curl \
   ${api_auth} \
   -s --retry 4 \
-  ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/${ep})
+  ${gh_api_base}/repos/at-wat/gh-pr-comment/releases/${ep} 2> ${curl_err_file}; true)
+curl_err="$(cat ${curl_err_file})"
+rm -f ${curl_err_file}
+if [ -n "${curl_err}" ]
+then
+  echo "failed to fetch releases: ${curl_err}" >&2
+  exit 1
+fi
 
 url=$(echo "${rel}" | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p' | grep "_${os}_${arch}${ext}" | head -n1)
 echo ${url} 
