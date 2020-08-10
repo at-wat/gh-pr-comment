@@ -15,12 +15,6 @@ jobs:
       dist: bionic
     - os: osx
       osx_image: xcode12u
-      addons:
-        homebrew:
-          packages:
-            - curl
-      before_install:
-        - echo 'export PATH="/usr/local/opt/curl/bin:$PATH"' >> ${HOME}/.bash_profile
     - stage: deploy
       install: skip
       script: skip
