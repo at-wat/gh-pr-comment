@@ -49,6 +49,7 @@ script:
       curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
     fi
   # Test install script
+  - which sh
   - ./install.sh
   - test -x ${HOME}/.local/bin/gh-pr-comment
   - test -x ${HOME}/.local/bin/gh-pr-upload
