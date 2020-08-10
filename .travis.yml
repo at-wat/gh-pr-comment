@@ -16,6 +16,10 @@ jobs:
     - os: osx
       osx_image: xcode12u
     - stage: deploy
+      addons:
+        homebrew:
+          packages:
+            - curl
       install: skip
       script: skip
       before_deploy:
