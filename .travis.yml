@@ -15,6 +15,12 @@ jobs:
       dist: bionic
     - os: osx
       osx_image: xcode12u
+      addons:
+        homebrew:
+          packages:
+            - curl-openssl
+      before_install:
+        - brew link curl-openssl --force
     - stage: deploy
       install: skip
       script: skip
