@@ -75,7 +75,8 @@ fi
 
 echo "_${os}_${arch}${ext}"
 echo "---"
-echo "$rel"
+echo "$rel" \
+  | sed -n 's/.*"browser_download_url":\s*"\([^"]*\)"/\1/p'
 echo "---"
 
 url=$(echo "${rel}" \
