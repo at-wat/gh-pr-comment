@@ -71,12 +71,6 @@ then
   exit 1
 fi
 
-echo "_${os}_${arch}${ext}"
-echo "---"
-echo "$rel" \
-  | sed -n 's/.*"browser_download_url":[ \t\r\n]*"\([^"]*\)"/\1/p'
-echo "---"
-
 url=$(echo "${rel}" \
   | sed -n 's/.*"browser_download_url":[ \t\r\n]*"\([^"]*\)"/\1/p' \
   | grep -e "_${os}_${arch}${ext}$" | head -n1)
