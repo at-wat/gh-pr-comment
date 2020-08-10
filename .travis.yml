@@ -9,8 +9,10 @@ jobs:
   include:
     - os: linux
       arch: amd64
+      dist: bionic
     - os: linux
       arch: arm64
+      dist: bionic
     - os: osx
     - stage: deploy
       install: skip
