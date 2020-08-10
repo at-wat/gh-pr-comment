@@ -4,6 +4,11 @@ os:
   - linux
   - macos
 dist: bionic
+branches:
+  only:
+    - master
+    - "/^v[0-9]+\\.[0-9]+\\.[0-9]+/"
+
 jobs:
   include:
     - os: linux
@@ -11,10 +16,16 @@ jobs:
     - os: linux
       arch: arm64
     - os: macos
-branches:
-  only:
-    - master
-    - "/^v[0-9]+\\.[0-9]+\\.[0-9]+/"
+    - stage: deploy
+      install: skip
+      script: skip
+      before_deploy:
+        - export GITHUB_TOKEN=${GITHUB_TOKEN_DEPLOY}
+      deploy:
+        - provider: script
+          script: curl -sL https://git.io/goreleaser | bash
+          on:
+            tags: true
 
 addons:
   apt:
@@ -45,12 +56,3 @@ script:
   - ./install.sh
   - test -x ${HOME}/.local/bin/gh-pr-comment
   - test -x ${HOME}/.local/bin/gh-pr-upload
-
-before_deploy:
-  - export GITHUB_TOKEN=${GITHUB_TOKEN_DEPLOY}
-
-deploy:
-  - provider: script
-    script: curl -sL https://git.io/goreleaser | bash
-    on:
-      tags: true
