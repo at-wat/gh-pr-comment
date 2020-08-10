@@ -14,6 +14,7 @@ jobs:
       arch: arm64
       dist: bionic
     - os: osx
+      osx_image: xcode12u
     - stage: deploy
       install: skip
       script: skip
