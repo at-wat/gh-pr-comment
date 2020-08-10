@@ -1,6 +1,17 @@
-dist: focal
 language: go
 go: 1.14
+os:
+  - linux
+  - macos
+jobs:
+  include:
+    - os: linux
+      dist: bionic
+      arch: amd64
+    - os: linux
+      dist: bionic
+      arch: arm64
+    - os: macos
 branches:
   only:
     - master
@@ -24,10 +35,17 @@ install:
   - sudo cp ./gh-pr-upload /usr/local/bin/
 
 script:
+  # Go test
   - go vet ./...
   - go test ./...
+  # E2E test
   - .ci/upload-test.sh
+  # GoReleaser config check
   - curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
+  # Test install script
+  - ./install
+  - test -x ${HOME}/.local/bin/gh-pr-comment
+  - test -x ${HOME}/.local/bin/gh-pr-upload
 
 before_deploy:
   - export GITHUB_TOKEN=${GITHUB_TOKEN_DEPLOY}

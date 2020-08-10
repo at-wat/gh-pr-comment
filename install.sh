@@ -7,6 +7,9 @@ case $(uname -p) in
   x86_64)
     arch=amd64
     ;;
+  arm64)
+    arch=arm64
+    ;;
   *)
     echo "unsupported arch" >&2
     exit 1
@@ -18,6 +21,10 @@ ext=
 case $(uname -s) in
   Linux)
     os=linux
+    ext=.tar.gz
+    ;;
+  Darwin)
+    os=darwin
     ext=.tar.gz
     ;;
   *)
