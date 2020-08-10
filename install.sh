@@ -11,7 +11,7 @@ case $(uname -p) in
     arch=arm64
     ;;
   *)
-    echo "unsupported arch" >&2
+    echo "unsupported arch $(uname -p)" >&2
     exit 1
     ;;
 esac
@@ -28,7 +28,7 @@ case $(uname -s) in
     ext=.tar.gz
     ;;
   *)
-    echo "unsupported OS" >&2
+    echo "unsupported OS $(uname -s)" >&2
     exit 1
     ;;
 esac
