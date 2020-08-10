@@ -3,15 +3,18 @@
 set -eu
 
 arch=
-case $(uname -p) in
+case $(uname -m) in
   x86_64)
     arch=amd64
     ;;
   arm64)
     arch=arm64
     ;;
+  aarch64)
+    arch=arm64
+    ;;
   *)
-    echo "unsupported arch $(uname -p)" >&2
+    echo "unsupported arch $(uname -m)" >&2
     exit 1
     ;;
 esac
