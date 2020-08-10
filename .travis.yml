@@ -15,11 +15,11 @@ jobs:
       dist: bionic
     - os: osx
       osx_image: xcode12u
-    - stage: deploy
       addons:
         homebrew:
           packages:
             - curl
+    - stage: deploy
       install: skip
       script: skip
       before_deploy:
