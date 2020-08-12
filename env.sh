@@ -7,6 +7,7 @@ then
   echo "-e TRAVIS"
   echo "-e TRAVIS_PULL_REQUEST"
   echo "-e TRAVIS_PULL_REQUEST_SLUG"
+  echo "-e TRAVIS_REPO_SLUG"
 fi
 
 if [ -n "${GITHUB_API_URL_BASE}" ]

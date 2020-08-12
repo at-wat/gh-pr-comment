@@ -80,7 +80,7 @@ env for Travis-CI:
 	bodyStr := fmt.Sprintf("## %s\n\n%s", title, body)
 	_, resp, err := gh.Issues.CreateComment(
 		ctx,
-		env.PullRequestSlug.Owner, env.PullRequestSlug.Repo,
+		env.RepoSlug.Owner, env.RepoSlug.Repo,
 		env.PullRequest,
 		&github.IssueComment{Body: &bodyStr},
 	)
