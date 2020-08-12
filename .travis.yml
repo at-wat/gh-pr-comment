@@ -58,6 +58,10 @@ script:
   - which sh
   - uname -m
   - uname -s
-  - ./install.sh
-  - test -x ${HOME}/.local/bin/gh-pr-comment
-  - test -x ${HOME}/.local/bin/gh-pr-upload
+  - |
+    if [ "${TRAVIS_PULL_REQUEST}" != "false" ]
+    then
+      ./install.sh
+      test -x ${HOME}/.local/bin/gh-pr-comment
+      test -x ${HOME}/.local/bin/gh-pr-upload
+    fi
