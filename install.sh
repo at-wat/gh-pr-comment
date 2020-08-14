@@ -36,13 +36,6 @@ case $(uname -s) in
     ;;
 esac
 
-# Check required commands.
-if ! which curl > /dev/null 2> /dev/null
-then
-  echo "curl not found" >&2
-  exit 1
-fi
-
 api_auth=
 if [ -n "${GITHUB_TOKEN:-${TRAVIS_BOT_GITHUB_TOKEN:-}}" ]
 then
