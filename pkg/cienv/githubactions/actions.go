@@ -31,7 +31,7 @@ func (t *Actions) Detect() (*cienv.CIEnv, error) {
 	if !ok {
 		return nil, errors.New("GITHUB_EVENT_NAME is not set")
 	}
-	env.IsPullRequest = eventName != "pull_request"
+	env.IsPullRequest = eventName == "pull_request"
 
 	if env.IsPullRequest {
 		if prEvent, ok := os.LookupEnv("GITHUB_EVENT_PATH"); ok {
@@ -50,7 +50,7 @@ func (t *Actions) Detect() (*cienv.CIEnv, error) {
 			env.PullRequest = event.Number
 			env.PullRequestSlug, err = cienv.NewSlug(event.PullRequest.Head.Repo.FullName)
 			if err != nil {
-				return nil, fmt.Errorf("failed to parse GITHUB_REPOSITORY: %w", err)
+				return nil, fmt.Errorf("failed to parse head.repo.full_name: %w", err)
 			}
 		} else {
 			return nil, errors.New("GITHUB_EVENT_PATH is not set")
@@ -75,7 +75,7 @@ type pullRequestEvent struct {
 		Head struct {
 			Repo struct {
 				FullName string `json:"full_name"`
-			}
+			} `json:"repo"`
 		} `json:"head"`
-	} `json:"pull_requst"`
+	} `json:"pull_request"`
 }
