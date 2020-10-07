@@ -18,4 +18,4 @@ jobs:
       - name: Post comment
         run: go run ./cmd/gh-pr-comment "Test from GitHub Actions" "Comment from GitHub Actions"
         env:
-          GITHUB_TOKEN: ${{ secret.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
