@@ -10,7 +10,8 @@ import (
 	"golang.org/x/oauth2"
 
 	"github.com/at-wat/gh-pr-comment/pkg/cienv"
-	_ "github.com/at-wat/gh-pr-comment/pkg/cienv/travis"
+	_ "github.com/at-wat/gh-pr-comment/pkg/cienv/githubactions"
+	_ "github.com/at-wat/gh-pr-comment/pkg/cienv/travisci"
 )
 
 func main() {
@@ -27,6 +28,16 @@ env for Travis-CI:
     owner/repos (TRAVIS_REPO_SLUG is used if not set)
   TRAVIS_PULL_REQUEST:
     pull request number
+
+env for GitHub Actions:
+  GITHUB_ACTIONS:
+    must be true
+	GITHUB_REPOSITORY:
+    owner/repos (TRAVIS_REPO_SLUG is used if not set)
+	GITHUB_EVENT_NAME:
+		action event name
+	GITHUB_EVENT_PATH:
+		path to webhook payload
 `)
 		os.Exit(1)
 	}
