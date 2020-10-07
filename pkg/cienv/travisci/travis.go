@@ -1,4 +1,4 @@
-package travis
+package travisci
 
 import (
 	"errors"
