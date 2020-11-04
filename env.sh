@@ -10,6 +10,15 @@ then
   echo "-e TRAVIS_REPO_SLUG"
 fi
 
+if [ "${GITHUB_ACTIONS}" = "true" ]
+then
+  echo "-e GITHUB_ACTIONS"
+  echo "-e GITHUB_EVENT_NAME"
+  echo "-e GITHUB_EVENT_PATH"
+  echo "-e GITHUB_REPOSITORY"
+  echo "-v ${GITHUB_EVENT_PATH}:${GITHUB_EVENT_PATH}"
+fi
+
 if [ -n "${GITHUB_API_URL_BASE}" ]
 then
   echo "-e GITHUB_API_URL_BASE"
