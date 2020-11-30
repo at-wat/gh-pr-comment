@@ -8,14 +8,60 @@ on:
       - master
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test-nix:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+      - name: Test
+        run: |
+          go vet ./...
+          go test ./...
+      - name: Post comment
+        run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check GoReleaser
+        if: runner.os == 'Linux'
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          version: latest
+          args: check
+  test-windows:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Go
         uses: actions/setup-go@v2
       - name: Post comment
-        run: go run ./cmd/gh-pr-comment "Test from GitHub Actions" "Comment from GitHub Actions"
+        run: |
+          go install ./...
+          $gobin=$(Join-Path $(go env GOPATH) "bin")
+          $env:PATH="$gobin;" + $env:PATH
+
+          echo "Test file" > test.txt
+          $env:ALLOW_PUBLIC_UPLOADER="true"
+          $env:IMAGE_UPLOADER="test"
+          gh-pr-upload test.txt
+          if ($?) {
+            $upload="OK"
+          } else {
+            $upload="Failed"
+          }
+          gh-pr-comment "✔ GitHub Actions ${{ runner.os }}" "upload test: ${upload}"
+          if ($upload -match "Failed") {
+            throw
+          }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

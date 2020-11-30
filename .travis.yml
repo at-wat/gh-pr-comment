@@ -1,67 +1,13 @@
 language: go
-go: 1.14
+dist: bionic
+go: 1.15
 branches:
   only:
     - master
-    - "/^v[0-9]+\\.[0-9]+\\.[0-9]+/"
-
-jobs:
-  include:
-    - os: linux
-      arch: amd64
-      dist: bionic
-    - os: linux
-      arch: arm64
-      dist: bionic
-    - os: osx
-      osx_image: xcode12u
-      addons:
-        homebrew:
-          packages:
-            - curl-openssl
-      before_install:
-        - export PATH="/usr/local/opt/curl-openssl/bin:${PATH}"
-    - stage: deploy
-      install: skip
-      script: skip
-      before_deploy:
-        - export GITHUB_TOKEN=${GITHUB_TOKEN_DEPLOY}
-      deploy:
-        - provider: script
-          script: curl -sL https://git.io/goreleaser | bash
-          on:
-            tags: true
-
-env:
-  global:
-    - CGO_ENABLED=0
-
-install:
-  - go build -ldflags="-s -w" ./cmd/gh-pr-comment
-  - go build -ldflags="-s -w" ./cmd/gh-pr-upload
-  - sudo cp ./gh-pr-comment /usr/local/bin/
-  - sudo cp ./gh-pr-upload /usr/local/bin/
 
 script:
   # Go test
   - go vet ./...
   - go test ./...
   # E2E test
-  - .ci/upload-test.sh
-  # GoReleaser config check
-  - |
-    if [ "${TRAVIS_OS_NAME}" = "linux" ] && [ "${TRAVIS_CPU_ARCH}" = "amd64" ]
-    then
-      curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config
-    fi
-  # Test install script
-  - which sh
-  - uname -m
-  - uname -s
-  - |
-    if [ "${TRAVIS_PULL_REQUEST}" != "false" ]
-    then
-      ./install.sh
-      test -x ${HOME}/.local/bin/gh-pr-comment
-      test -x ${HOME}/.local/bin/gh-pr-upload
-    fi
+  - .ci/upload-test.sh "Travis-CI ${TRAVIS_OS_NAME}"
