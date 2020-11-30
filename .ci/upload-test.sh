@@ -3,6 +3,7 @@
 set -eu
 
 export PATH="${PATH}:$(go env GOPATH)/bin"
+go install ./...
 
 file=$(mktemp)
 echo "Test file" > ${file}
