@@ -48,17 +48,18 @@ jobs:
         run: |
           go install ./...
           $gobin=(Join-Path $(go env GOPATH) "bin")
+          [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH', 'User') + ";$gobin", 'User')
 
           echo "Test file" > test.txt
           $env:ALLOW_PUBLIC_UPLOADER=true
           $env:IMAGE_UPLOADER=test
-          $gobin\gh-pr-upload test.txt
+          gh-pr-upload test.txt
           if ($?) {
             $upload=OK
           } else {
             $upload=Failed
           }
-          $gobin\gh-pr-comment "✔ GitHub Actions ${{ runner.os }}" "upload test: ${upload}"
+          gh-pr-comment "✔ GitHub Actions ${{ runner.os }}" "upload test: ${upload}"
           if ($upload -match "Failed") {
             throw
           }
