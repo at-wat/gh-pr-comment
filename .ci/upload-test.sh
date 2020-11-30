@@ -2,6 +2,8 @@
 
 set -eu
 
+export PATH="${PATH}:$(go env GOPATH)/bin"
+
 file=$(mktemp)
 echo "Test file" > ${file}
 ALLOW_PUBLIC_UPLOADER=true IMAGE_UPLOADER=test gh-pr-upload ${file} \
