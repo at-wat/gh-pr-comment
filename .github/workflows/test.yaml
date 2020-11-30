@@ -39,7 +39,8 @@ jobs:
           ./install.sh
           test -x ${HOME}/.local/bin/gh-pr-comment
           test -x ${HOME}/.local/bin/gh-pr-upload
-      - name: Run GoReleaser
+      - name: Check GoReleaser
+        if: runner.os == 'Linux'
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
