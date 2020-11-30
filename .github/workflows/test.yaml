@@ -48,7 +48,9 @@ jobs:
         run: |
           go install ./...
           echo "Test file" > test.txt
-          ALLOW_PUBLIC_UPLOADER=true IMAGE_UPLOADER=test gh-pr-upload test.txt
+          $env:ALLOW_PUBLIC_UPLOADER=true
+          $env:IMAGE_UPLOADER=test
+          gh-pr-upload test.txt
           if ($?) {
             $upload=OK
           } else {
