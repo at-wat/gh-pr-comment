@@ -30,7 +30,7 @@ jobs:
           go install ./...
           echo "$(go env GOPATH)/bin" >> ${GITHUB_PATH}
       - name: Post comment
-        run: .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
+        run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install script test
