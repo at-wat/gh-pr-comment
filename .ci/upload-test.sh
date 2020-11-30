@@ -9,7 +9,7 @@ ALLOW_PUBLIC_UPLOADER=true IMAGE_UPLOADER=test gh-pr-upload ${file} \
 echo
 
 gh-pr-comment "✔ Test post" \
-  "- environment: $(uname -a || echo "No uname command")
+  "- environment: $(uname -o && echo -n " " && uname -m || echo "No uname command")
 - upload test: ${upload}
 "
 
