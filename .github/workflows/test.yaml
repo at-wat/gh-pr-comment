@@ -51,13 +51,13 @@ jobs:
           $env:PATH="$gobin;" + $env:PATH
 
           echo "Test file" > test.txt
-          $env:ALLOW_PUBLIC_UPLOADER=true
-          $env:IMAGE_UPLOADER=test
+          $env:ALLOW_PUBLIC_UPLOADER="true"
+          $env:IMAGE_UPLOADER="test"
           gh-pr-upload test.txt
           if ($?) {
-            $upload=OK
+            $upload="OK"
           } else {
-            $upload=Failed
+            $upload="Failed"
           }
           gh-pr-comment "✔ GitHub Actions ${{ runner.os }}" "upload test: ${upload}"
           if ($upload -match "Failed") {
