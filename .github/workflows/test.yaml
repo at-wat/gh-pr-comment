@@ -10,12 +10,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Go
         uses: actions/setup-go@v2
       - name: Post comment
-        run: go run ./cmd/gh-pr-comment "Test from GitHub Actions" "Comment from GitHub Actions"
+        run: .ci/upload-test.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install test
+        run: |
+          ./install.sh
+          test -x ${HOME}/.local/bin/gh-pr-comment
+          test -x ${HOME}/.local/bin/gh-pr-upload
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          version: latest
+          args: check
