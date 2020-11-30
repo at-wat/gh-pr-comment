@@ -47,8 +47,8 @@ jobs:
       - name: Post comment
         run: |
           go install ./...
-          $gobin=(Join-Path $(go env GOPATH) "bin")
-          [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH', 'User') + ";$gobin", 'User')
+          $gobin=$(Join-Path $(go env GOPATH) "bin")
+          $env:PATH="$gobin;" + $env:PATH
 
           echo "Test file" > test.txt
           $env:ALLOW_PUBLIC_UPLOADER=true
