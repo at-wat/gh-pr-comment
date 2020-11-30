@@ -47,7 +47,7 @@ jobs:
       - name: Post comment
         run: |
           go install ./...
-          $gobin=(Join-Path $GOPATH "bin")
+          $gobin=(Join-Path $(go env GOPATH) "bin")
           [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH', 'User') + ";$gobin", 'User')
 
           echo "Test file" > test.txt
