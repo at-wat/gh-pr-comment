@@ -19,6 +19,7 @@ import (
 
 func main() {
 	repl := flag.String("stdin", "", "replace this keyword in comment by text from stdin")
+	pr := flag.Int("pr", 0, "override PR number")
 	flag.Parse()
 
 	if len(flag.Args()) < 2 {
@@ -58,6 +59,11 @@ options:
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
+	}
+
+	if *pr > 0 {
+		env.IsPullRequest = true
+		env.PullRequest = *pr
 	}
 
 	if !env.IsPullRequest {
