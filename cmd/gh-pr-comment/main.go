@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/google/go-github/v32/github"
@@ -15,8 +18,10 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 {
-		fmt.Fprintf(os.Stderr, "usage: %s title comment\n", os.Args[0])
+	repl := flag.String("stdin", "", "replace this keyword in comment by text from stdin")
+
+	if len(flag.Args()) < 2 {
+		fmt.Fprintf(os.Stderr, "usage: %s [option] title comment\n", os.Args[0])
 		fmt.Fprint(os.Stderr, `env:
   GITHUB_TOKEN (or TRAVIS_BOT_GITHUB_TOKEN):
     token with comment write permission
@@ -38,11 +43,15 @@ env for GitHub Actions:
 		action event name
 	GITHUB_EVENT_PATH:
 		path to webhook payload
+
+options:
 `)
+
+		flag.PrintDefaults()
 		os.Exit(1)
 	}
-	title := os.Args[1]
-	body := os.Args[2]
+	title := flag.Args()[0]
+	body := flag.Args()[1]
 
 	env, err := cienv.Detect()
 	if err != nil {
@@ -66,6 +75,15 @@ env for GitHub Actions:
 	if ghToken == "" {
 		fmt.Fprint(os.Stderr, "error: neither TRAVIS_BOT_GITHUB_TOKEN nor GITHUB_TOKEN is not set.\n")
 		os.Exit(1)
+	}
+
+	if *repl != "" {
+		in, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			fmt.Fprint(os.Stderr, "error: failed to read from stdin.\n")
+			os.Exit(1)
+		}
+		body = strings.Replace(body, *repl, string(in), 1)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
