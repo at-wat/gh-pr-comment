@@ -19,6 +19,7 @@ import (
 
 func main() {
 	repl := flag.String("stdin", "", "replace this keyword in comment by text from stdin")
+	flag.Parse()
 
 	if len(flag.Args()) < 2 {
 		fmt.Fprintf(os.Stderr, "usage: %s [option] title comment\n", os.Args[0])
