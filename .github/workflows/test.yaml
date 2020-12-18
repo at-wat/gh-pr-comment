@@ -36,8 +36,7 @@ jobs:
         run: |
           date | gh-pr-comment -stdin STDIN "Comment with -stdin" 'Text from stdin:
           ```
-          STDIN
-          ```'
+          STDIN```'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check GoReleaser
