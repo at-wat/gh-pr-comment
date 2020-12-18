@@ -21,12 +21,22 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Go
         uses: actions/setup-go@v2
+      - name: Set path
+        run: echo "$(go env GOPATH)/bin" >> ${GITHUB_PATH}
       - name: Test
         run: |
           go vet ./...
           go test ./...
       - name: Post comment
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post comment with -stdin
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          date | gh-pr-comment -stdin STDIN "✔ Comment with -stdin" 'Text from stdin:
+          ```
+          STDIN```'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check GoReleaser
