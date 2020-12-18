@@ -47,7 +47,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Post comment from master branch
         if: matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
-        run: gh-pr-comment -pr ${PR} "✔ Comment from master branch" "PR number\: ${PR}"
+        run: gh-pr-comment -pr ${PR} "✔ Comment from master branch" 'PR number: '"${PR}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ steps.get-pr-number.outputs.number }}
