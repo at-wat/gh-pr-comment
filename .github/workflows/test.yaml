@@ -29,6 +29,11 @@ jobs:
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post comment with -stdin
+        if: matrix.os == "ubuntu-latest"
+        run: date | gh-pr-comment -stdin STDIN "Comment with -stdin" "text from stdin:\n```\nSTDIN\n```"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check GoReleaser
         if: runner.os == 'Linux'
         uses: goreleaser/goreleaser-action@v2
