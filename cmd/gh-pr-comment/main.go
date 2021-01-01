@@ -20,6 +20,7 @@ import (
 func main() {
 	repl := flag.String("stdin", "", "replace this keyword in comment by text from stdin")
 	pr := flag.Int("pr", 0, "override PR number")
+	timeout := flag.Duration("timeout", time.Minute, "GitHub API timeout")
 	flag.Parse()
 
 	if len(flag.Args()) < 2 {
@@ -93,7 +94,7 @@ options:
 		body = strings.Replace(body, *repl, string(in), 1)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
 	defer cancel()
 
 	tc := oauth2.NewClient(
