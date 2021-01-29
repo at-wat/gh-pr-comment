@@ -70,7 +70,7 @@ url=$(echo "${rel}" \
 echo ${url} 
 if [ -z "${url}" ]
 then
-  echo "supported binary not found" >&2
+  echo "supported binary not found for ${os} ${arch}" >&2
   exit 1
 fi
 
