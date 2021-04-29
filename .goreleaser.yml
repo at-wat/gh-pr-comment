@@ -35,6 +35,11 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+    files:
+      - gh-pr-comment-env.sh
+before:
+  hooks:
+    - cp env.sh gh-pr-comment-env.sh
 checksum:
   name_template: 'checksums.txt'
 signs:

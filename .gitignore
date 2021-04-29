@@ -6,3 +6,4 @@ gh-pr-comment.upx
 gh-pr-upload.upx
 dist
 *.sig
+gh-pr-comment-env.sh
