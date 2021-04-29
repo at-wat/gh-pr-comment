@@ -7,21 +7,35 @@ on:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    env:
+      GPG_FINGERPRINT: "358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Unshallow
-        run: git fetch --prune --unshallow
+        with:
+          fetch-depth: 0
       - name: Setup Go
         uses: actions/setup-go@v2
       - name: Load signing key
         run: echo "${{ secrets.PGP_SIGN_KEY }}" | gpg --import --no-tty --batch
+      - name: Sign installer scripts
+        run: |
+          for file in install.sh env.sh
+          do
+            gpg \
+              --batch \
+              --no-tty \
+              --passphrase="${{ secrets.SIGN_KEY_PASSPHRESE }}" \
+              --pinentry-mode=loopback \
+              --local-user="${GPG_FINGERPRINT}" \
+              --output="${file}.sig" \
+              --detach-sign \
+              ${file}
+          done
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_FINGERPRINT: "358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2"
           SIGN_KEY_PASSPHRESE: ${{ secrets.SIGN_KEY_PASSPHRESE }}
