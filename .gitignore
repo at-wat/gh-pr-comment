@@ -5,3 +5,4 @@ gh-pr-upload
 gh-pr-comment.upx
 gh-pr-upload.upx
 dist
+*.sig
