@@ -53,4 +53,6 @@ signs:
 release:
   extra_files:
     - glob: ./install.sh
+    - glob: ./install.sh.sig
     - glob: ./env.sh
+    - glob: ./env.sh.sig
