@@ -38,4 +38,5 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SIGN_KEY_PASSPHRESE: ${{ secrets.SIGN_KEY_PASSPHRESE }}
