@@ -59,4 +59,5 @@ $ docker run [your options...] \
 
 If your environment handles sensitive information, it is recommended to download `install.sh` and `env.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
 My public key is available at https://github.com/at-wat.gpg and SKS keyserver pool.
+
 (fingerprint: `358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2`)
