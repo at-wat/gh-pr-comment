@@ -43,6 +43,7 @@ $ docker run [your options...] \
     $(bash <(curl -s https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/env.sh)) \
     image commands...
 ```
+`env.sh` is also bundled as `gh-pr-comment-env.sh` in release archives.
 
 ### General
 - ***GITHUB\_TOKEN***: token with comment write permission
