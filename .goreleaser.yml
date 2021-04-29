@@ -50,3 +50,7 @@ signs:
       - "${signature}"
       - "--detach-sign"
       - "${artifact}"
+release:
+  extra_files:
+    - glob: ./install.sh
+    - glob: ./env.sh
