@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - 'sign-installer-scripts'
 
 jobs:
   goreleaser:
@@ -38,6 +36,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: build --snapshot
+          args: release --rm-dist
         env:
           SIGN_KEY_PASSPHRESE: ${{ secrets.SIGN_KEY_PASSPHRESE }}
