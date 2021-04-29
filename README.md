@@ -12,6 +12,8 @@ $ gh-pr-comment title comment
 
 ### GitHub Actions
 
+https://github.com/at-wat/setup-gh-pr-comment
+
 ```yaml
       - uses: at-wat/setup-gh-pr-comment@v0
       ...
