@@ -33,8 +33,9 @@ $ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install
   | sh -s v0.5.0 /path/to/bin
 ```
 
-If your environment handles security sensitive information, it is recommended to download `install.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
-My public key is available at https://github.com/at-wat.gpg and SKS keyserver pool. (fingerprint: `358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2`)
+If your environment handles sensitive information, it is recommended to download `install.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
+My public key is available at https://github.com/at-wat.gpg and SKS keyserver pool.
+(fingerprint: `358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2`)
 
 ## Required environment variables
 
@@ -45,7 +46,7 @@ $ docker run [your options...] \
     image commands...
 ```
 
-If your environment handles security sensitive information, it is recommended to download `env.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
+If your environment handles sensitive information, it is recommended to download `env.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
 
 ### General
 - ***GITHUB\_TOKEN***: token with comment write permission
