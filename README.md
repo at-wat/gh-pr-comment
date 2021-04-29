@@ -10,7 +10,18 @@ $ gh-pr-comment title comment
 
 ## Install
 
+### GitHub Actions
+
+```yaml
+      - uses: at-wat/setup-gh-pr-comment@v0
+      ...
+      - run: gh-pr-comment "title" "message"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 ### Download compiled binary
+
 ```shell
 # Install latest version under ~/.local/bin
 $ curl -sL https://raw.githubusercontent.com/at-wat/gh-pr-comment/master/install.sh | sh -s
@@ -34,7 +45,7 @@ $ docker run [your options...] \
 ```
 
 ### General
-- ***GITHUB\_TOKEN*** (or ***TRAVIS\_BOT\_GITHUB\_TOKEN***): token with comment write permission
+- ***GITHUB\_TOKEN***: token with comment write permission
 
 ### Optional
 - ***GITHUB\_API\_URL\_BASE***: specify GitHub Enterprise or any custom endpoint URL
@@ -43,3 +54,10 @@ $ docker run [your options...] \
 - ***TRAVIS***: true
 - ***TRAVIS\_PULL\_REQUEST\_SLUG***: owner/repos
 - ***TRAVIS\_PULL\_REQUEST***: pull request number
+
+## Security
+
+If your environment handles sensitive information, it is recommended to download `install.sh` and `env.sh` from https://github.com/at-wat/gh-pr-comment/releases and verify the signature using GPG.
+My public key is available at https://github.com/at-wat.gpg and SKS keyserver pool.
+
+(fingerprint: `358B DF63 B4AE D76A 871A  E62E 1BF1 686B 468C 35B2`)
