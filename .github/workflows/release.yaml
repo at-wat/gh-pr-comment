@@ -27,12 +27,10 @@ jobs:
             gpg \
               --batch \
               --no-tty \
-              --passphrase=${{ secrets.SIGN_KEY_PASSPHRESE }} \
+              --passphrase="${{ secrets.SIGN_KEY_PASSPHRESE }}" \
               --pinentry-mode=loopback \
-              --local-user \
-              ${GPG_FINGERPRINT} \
-              --output \
-              ${file}.sig \
+              --local-user="${GPG_FINGERPRINT}" \
+              --output="${file}.sig" \
               --detach-sign \
               ${file}
           done
