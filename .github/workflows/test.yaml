@@ -31,12 +31,22 @@ jobs:
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post comment with -overwrite-existing
+        if: matrix.os == 'ubuntu-latest'
+        run: gh-pr-comment -overwrite-existing "✔ Comment with -overwrite-existing" "Base test"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Post comment with -stdin
         if: matrix.os == 'ubuntu-latest'
         run: |
           date | gh-pr-comment -stdin STDIN "✔ Comment with -stdin" 'Text from stdin:
           ```
           STDIN```'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post comment with -overwrite-existing (overwrite)
+        if: matrix.os == 'ubuntu-latest'
+        run: gh-pr-comment -overwrite-existing "✔ Comment with -overwrite-existing" "Overwritten"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get PR number
