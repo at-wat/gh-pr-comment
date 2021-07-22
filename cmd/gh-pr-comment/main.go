@@ -26,7 +26,7 @@ func main() {
 	if len(flag.Args()) < 2 {
 		fmt.Fprintf(os.Stderr, "usage: %s [option] title comment\n", os.Args[0])
 		fmt.Fprint(os.Stderr, `env:
-  GITHUB_TOKEN (or TRAVIS_BOT_GITHUB_TOKEN):
+  GITHUB_TOKEN
     token with comment write permission
 
 env for Travis-CI:
