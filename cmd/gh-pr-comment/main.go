@@ -18,9 +18,12 @@ import (
 )
 
 func main() {
-	repl := flag.String("stdin", "", "replace this keyword in comment by text from stdin")
-	pr := flag.Int("pr", 0, "override PR number")
-	timeout := flag.Duration("timeout", time.Minute, "GitHub API timeout")
+	var (
+		repl        = flag.String("stdin", "", "replace this keyword in comment by text from stdin")
+		pr          = flag.Int("pr", 0, "override PR number")
+		timeout     = flag.Duration("timeout", time.Minute, "GitHub API timeout")
+		ovwExisting = flag.Bool("overwrite-existing", false, "Overwrite existing comment with same title")
+	)
 	flag.Parse()
 
 	if len(flag.Args()) < 2 {
@@ -115,12 +118,52 @@ options:
 	}
 
 	bodyStr := fmt.Sprintf("## %s\n\n%s", title, body)
-	_, resp, err := gh.Issues.CreateComment(
-		ctx,
-		env.RepoSlug.Owner, env.RepoSlug.Repo,
-		env.PullRequest,
-		&github.IssueComment{Body: &bodyStr},
-	)
+	var commentID int64
+
+	if *ovwExisting {
+		head := "## " + title
+		opt := &github.IssueListCommentsOptions{}
+	L_PAGE:
+		for {
+			issues, resp, err := gh.Issues.ListComments(
+				ctx,
+				env.RepoSlug.Owner, env.RepoSlug.Repo,
+				env.PullRequest,
+				opt,
+			)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "error: failed to call ListComments API: %v\n", err)
+				break
+			}
+			for _, issue := range issues {
+				if strings.HasPrefix(issue.GetBody(), head) {
+					commentID = issue.GetID()
+					break L_PAGE
+				}
+			}
+			if resp.NextPage == 0 {
+				break
+			}
+			opt.Page = resp.NextPage
+		}
+	}
+
+	var resp *github.Response
+	if commentID == 0 {
+		_, resp, err = gh.Issues.CreateComment(
+			ctx,
+			env.RepoSlug.Owner, env.RepoSlug.Repo,
+			env.PullRequest,
+			&github.IssueComment{Body: &bodyStr},
+		)
+	} else {
+		_, resp, err = gh.Issues.EditComment(
+			ctx,
+			env.RepoSlug.Owner, env.RepoSlug.Repo,
+			commentID,
+			&github.IssueComment{Body: &bodyStr},
+		)
+	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: failed to call CreateComment API: %v\n", err)
 		os.Exit(1)
