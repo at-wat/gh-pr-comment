@@ -21,4 +21,3 @@ jobs:
           github_token: ${{ secrets.GO_SUM_FIX_GITHUB_TOKEN }}
           commit_style: squash
           push: force
-          update_import_path: true
