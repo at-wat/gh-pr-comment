@@ -42,7 +42,7 @@ remove_escseq() {
 }
 
 
-gh-pr-comment ${pr_option:-} "${status} Command exited with code ${exit_code}" "
+cat <<EOS | gh-pr-comment ${pr_option:-} -stdin BODY "${status} Command exited with code ${exit_code}" BODY
 ${md_codeblock}sh
 $(echo "$@")
 ${md_codeblock}
@@ -54,4 +54,4 @@ $(cat ${out} | remove_escseq)
 ${md_codeblock}
 
 ${collapse_end:-}
-"
+EOS
