@@ -28,7 +28,9 @@ jobs:
           go vet ./...
           go test ./...
       - name: Install scripts
-        run: cp scripts/* "$(go env GOPATH)/bin/"
+        run: |
+          mkdir -p "$(go env GOPATH)/bin/"
+          cp scripts/* "$(go env GOPATH)/bin/"
 
       - name: Post comment
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
