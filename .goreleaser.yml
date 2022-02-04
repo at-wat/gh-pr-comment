@@ -38,6 +38,7 @@ archives:
     files:
       - gh-pr-comment-env.sh
       - src: scripts/gh-pr-comment-exec
+        dst: ./
         strip_parent: true
 before:
   hooks:
