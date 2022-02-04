@@ -37,6 +37,8 @@ archives:
         format: zip
     files:
       - gh-pr-comment-env.sh
+      - src: scripts/gh-pr-comment-exec
+        strip_parent: true
 before:
   hooks:
     - cp env.sh gh-pr-comment-env.sh
