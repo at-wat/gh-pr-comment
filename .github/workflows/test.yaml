@@ -75,6 +75,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.get-pr-number.outputs.number }}
+      - name: Post error comment with command exec wrapper
+        if: matrix.os == 'ubuntu-latest' && github.event_name == 'pull_request'
+        run: |
+          if gh-pr-comment-exec -c -- false This is expected to be failed
+          then
+            echo "Expected to be failed" >&2
+            false
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check GoReleaser
         if: runner.os == 'Linux'
