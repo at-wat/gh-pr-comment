@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -eu
+
+while [ $# -gt 0 ]
+do
+  case $1 in
+    --)
+      shift
+      break
+      ;;
+    --collapse|-c)
+      collapse_start="<details><summary>Command output</summary>"
+      collapse_end="</details>"
+      ;;
+    -h)
+      echo "usage: $(basename $0) [--collapse|-c] -- COMMAND" >&2
+      exit 0
+      ;;
+    *)
+      echo "$(basename $0): invalid option -- '$1'" >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [ -n "${PR_NUMBER:-}" ]; then
+  pr_option="-pr ${PR_NUMBER}"
+fi
+
+out=$(mktemp)
+$@ 2>&1 | tee ${out}
+exit_code=${PIPESTATUS[0]}
+trap "rm ${out}; exit ${exit_code}" EXIT
+
+test ${exit_code} -eq 0 && status=':white_check_mark:' || status=':x:'
+
+md_codeblock='```'
+remove_escseq() {
+  sed 's/\x1b\[\([0-9]\+;\)*[0-9]\+[a-zA-Z]//g'
+}
+
+
+cat <<EOS | gh-pr-comment ${pr_option:-} -stdin BODY "${status} Command exited with code ${exit_code}" BODY
+${md_codeblock}sh
+$(echo "$@")
+${md_codeblock}
+
+${collapse_start:-}
+
+${md_codeblock}
+$(cat ${out} | remove_escseq)
+${md_codeblock}
+
+${collapse_end:-}
+EOS

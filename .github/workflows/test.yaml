@@ -27,6 +27,11 @@ jobs:
         run: |
           go vet ./...
           go test ./...
+      - name: Install scripts
+        run: |
+          mkdir -p "$(go env GOPATH)/bin/"
+          cp scripts/* "$(go env GOPATH)/bin/"
+
       - name: Post comment
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"
         env:
@@ -49,6 +54,7 @@ jobs:
         run: gh-pr-comment -overwrite-existing "✔ Comment with -overwrite-existing" "Overwritten"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Get PR number
         if: matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
         id: get-pr-number
@@ -62,12 +68,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ steps.get-pr-number.outputs.number }}
+
+      - name: Post comment with command exec wrapper
+        if: matrix.os == 'ubuntu-latest'
+        run: gh-pr-comment-exec -c -- ls -x --color=always /
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.get-pr-number.outputs.number }}
+
       - name: Check GoReleaser
         if: runner.os == 'Linux'
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
           args: check
+
   test-windows:
     runs-on: windows-latest
     strategy:
