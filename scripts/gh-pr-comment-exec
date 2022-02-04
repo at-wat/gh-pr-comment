@@ -37,16 +37,20 @@ trap "rm ${out}; exit ${exit_code}" EXIT
 test ${exit_code} -eq 0 && status=':white_check_mark:' || status=':x:'
 
 md_codeblock='```'
+remove_escseq() {
+  sed 's/\x1b\[\([0-9]\+;\)*[0-9]\+[a-zA-Z]//g'
+}
+
 
 gh-pr-comment ${pr_option:-} "${status} Command exited with code ${exit_code}" "
 ${md_codeblock}sh
-$@
+$(echo "$@")
 ${md_codeblock}
 
 ${collapse_start:-}
 
 ${md_codeblock}
-$(cat ${out} | sed 's/\x1b\[\([0-9]\+;\)*[0-9]\+[a-zA-Z]//g')
+$(cat ${out} | remove_escseq)
 ${md_codeblock}
 
 ${collapse_end:-}
