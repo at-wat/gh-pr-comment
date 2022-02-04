@@ -71,7 +71,7 @@ jobs:
 
       - name: Post comment with command exec wrapper
         if: matrix.os == 'ubuntu-latest'
-        run: gh-pr-comment-exec -c -- ls --color=always /
+        run: gh-pr-comment-exec -c -- ls -x --color=always /
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.get-pr-number.outputs.number }}
