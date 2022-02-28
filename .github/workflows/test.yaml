@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
       - name: Set path
         run: echo "$(go env GOPATH)/bin" >> ${GITHUB_PATH}
       - name: Test
@@ -101,7 +101,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
       - name: Post comment
         run: |
           go install ./...
