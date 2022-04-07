@@ -11,6 +11,8 @@ ALLOW_PUBLIC_UPLOADER=true IMAGE_UPLOADER=test gh-pr-upload ${file} \
   && upload=OK || upload=Failed
 echo
 
-gh-pr-comment "✔ $1" "upload test: ${upload}"
+gh-pr-comment "✔ $1" "upload test: ${upload}
+$(go version)
+"
 
 [ ${upload} == "OK" ]
