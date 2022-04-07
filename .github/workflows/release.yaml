@@ -14,8 +14,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Get Go version
+        id: go-version
+        run: echo "::set-output name=version::$(sed -n 's/^go \([0-9\.]\+\)/\1/p' go.mod)"
       - name: Setup Go
         uses: actions/setup-go@v3
+        with:
+          go-version: '${{ steps.go-version.outputs.version }}'
       - name: Load signing key
         run: echo "${{ secrets.PGP_SIGN_KEY }}" | gpg --import --no-tty --batch
       - name: Sign installer scripts
