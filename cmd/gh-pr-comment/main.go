@@ -29,8 +29,10 @@ func main() {
 	if len(flag.Args()) < 2 {
 		fmt.Fprintf(os.Stderr, "usage: %s [option] title comment\n", os.Args[0])
 		fmt.Fprint(os.Stderr, `env:
-  GITHUB_TOKEN
+  GITHUB_TOKEN:
     token with comment write permission
+  GITHUB_COMMENT_TOKEN:
+    [optional] override GITHUB_TOKEN
 
 env for Travis-CI:
   TRAVIS:
@@ -43,12 +45,12 @@ env for Travis-CI:
 env for GitHub Actions:
   GITHUB_ACTIONS:
     must be true
-	GITHUB_REPOSITORY:
+  GITHUB_REPOSITORY:
     owner/repos (TRAVIS_REPO_SLUG is used if not set)
-	GITHUB_EVENT_NAME:
-		action event name
-	GITHUB_EVENT_PATH:
-		path to webhook payload
+  GITHUB_EVENT_NAME:
+    action event name
+  GITHUB_EVENT_PATH:
+    path to webhook payload
 
 options:
 `)
@@ -77,14 +79,16 @@ options:
 
 	var ghToken string
 
-	if t, ok := os.LookupEnv("TRAVIS_BOT_GITHUB_TOKEN"); ok {
+	if t, ok := os.LookupEnv("GITHUB_COMMENT_TOKEN"); ok {
+		ghToken = t
+	} else if t, ok := os.LookupEnv("TRAVIS_BOT_GITHUB_TOKEN"); ok {
 		ghToken = t
 	} else if t, ok := os.LookupEnv("GITHUB_TOKEN"); ok {
 		ghToken = t
 	}
 
 	if ghToken == "" {
-		fmt.Fprint(os.Stderr, "error: neither TRAVIS_BOT_GITHUB_TOKEN nor GITHUB_TOKEN is not set.\n")
+		fmt.Fprint(os.Stderr, "error: GITHUB_TOKEN is not set.\n")
 		os.Exit(1)
 	}
 
