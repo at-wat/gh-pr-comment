@@ -7,7 +7,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.0
 	github.com/google/go-github/v39 v39.2.0
 	github.com/google/uuid v1.3.0
-	golang.org/x/oauth2 v0.0.0-20220630143837-2104d58473e0
+	golang.org/x/oauth2 v0.0.0-20220718184931-c8730f7fcb92
 )
 
 require (
