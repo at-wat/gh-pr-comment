@@ -1,6 +1,6 @@
 module github.com/at-wat/gh-pr-comment
 
-go 1.18
+go 1.19
 
 require (
 	github.com/aws/aws-sdk-go v1.44.32
