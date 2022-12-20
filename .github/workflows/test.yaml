@@ -108,7 +108,7 @@ jobs:
 
       - name: Check GoReleaser
         if: runner.os == 'Linux'
-        uses: goreleaser/goreleaser-action@v3
+        uses: goreleaser/goreleaser-action@v4
         with:
           version: latest
           args: check
