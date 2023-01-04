@@ -32,6 +32,7 @@ archives:
       - gh-pr-comment
       - gh-pr-upload
     format: tar.gz
+    rlcp: true
     format_overrides:
       - goos: windows
         format: zip
