@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/aws/aws-sdk-go v1.44.199
 	github.com/gabriel-vasile/mimetype v1.4.1
-	github.com/google/go-github/v50 v50.0.0
+	github.com/google/go-github/v50 v50.1.0
 	github.com/google/uuid v1.3.0
 	golang.org/x/oauth2 v0.5.0
 )
