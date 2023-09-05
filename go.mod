@@ -6,7 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.44.318
 	github.com/gabriel-vasile/mimetype v1.4.2
 	github.com/google/go-github/v53 v53.2.0
-	github.com/google/uuid v1.3.0
+	github.com/google/uuid v1.3.1
 	golang.org/x/oauth2 v0.11.0
 )
 
