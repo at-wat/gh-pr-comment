@@ -3,7 +3,7 @@ module github.com/at-wat/gh-pr-comment
 go 1.18
 
 require (
-	github.com/aws/aws-sdk-go v1.44.318
+	github.com/aws/aws-sdk-go v1.45.3
 	github.com/gabriel-vasile/mimetype v1.4.2
 	github.com/google/go-github/v54 v54.0.0
 	github.com/google/uuid v1.3.1
