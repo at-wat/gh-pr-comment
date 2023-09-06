@@ -177,29 +177,6 @@ func uploadS3(filename string) error {
 }
 
 func uploadTest(filename string) error {
-	req, err := http.NewRequest("POST", "http://devnull-as-a-service.com/dev/null", nil)
-	if err != nil {
-		return err
-	}
-
-	req.Body, err = os.Open(filename)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
-	defer req.Body.Close()
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: failed to post: %v\n", err)
-		os.Exit(1)
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode < 200 || 300 <= resp.StatusCode {
-		fmt.Fprintf(os.Stderr, "error: failed to upload: %s\n", resp.Status)
-		os.Exit(1)
-	}
-
 	fmt.Printf("file://%s", filename)
 
 	return nil
