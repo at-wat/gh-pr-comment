@@ -1,11 +1,13 @@
 module github.com/at-wat/gh-pr-comment
 
-go 1.18
+go 1.21
+
+toolchain go1.22.2
 
 require (
 	github.com/aws/aws-sdk-go v1.50.20
 	github.com/gabriel-vasile/mimetype v1.4.3
-	github.com/google/go-github/v59 v59.0.0
+	github.com/google/go-github/v61 v61.0.0
 	github.com/google/uuid v1.6.0
 	golang.org/x/oauth2 v0.17.0
 )
