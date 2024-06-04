@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.22.2
 
 require (
-	github.com/aws/aws-sdk-go v1.52.3
+	github.com/aws/aws-sdk-go v1.53.16
 	github.com/gabriel-vasile/mimetype v1.4.3
 	github.com/google/go-github/v61 v61.0.0
 	github.com/google/uuid v1.6.0
