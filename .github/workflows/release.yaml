@@ -38,10 +38,10 @@ jobs:
               ${file}
           done
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6
         with:
           version: latest
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SIGN_KEY_PASSPHRESE: ${{ secrets.SIGN_KEY_PASSPHRESE }}
