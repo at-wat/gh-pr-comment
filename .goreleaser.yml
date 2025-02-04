@@ -33,10 +33,12 @@ archives:
   - builds:
       - gh-pr-comment
       - gh-pr-upload
-    format: tar.gz
+    formats:
+      - tar.gz
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
     files:
       - gh-pr-comment-env.sh
       - src: scripts/gh-pr-comment-exec
