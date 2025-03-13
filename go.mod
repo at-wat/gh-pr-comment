@@ -1,7 +1,6 @@
 module github.com/at-wat/gh-pr-comment
 
 go 1.22.0
-
 toolchain go1.24.0
 
 require (
@@ -15,5 +14,5 @@ require (
 require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 )
