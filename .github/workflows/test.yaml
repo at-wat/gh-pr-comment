@@ -45,6 +45,8 @@ jobs:
         run: |
           mkdir -p "$(go env GOPATH)/bin/"
           cp scripts/* "$(go env GOPATH)/bin/"
+      - name: Start localstack
+        run: docker-compose -f test/docker-compose.yaml up
 
       - name: Post comment
         run: bash .ci/upload-test.sh "GitHub Actions ${{ runner.os }}"

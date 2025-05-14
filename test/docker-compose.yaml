@@ -1,0 +1,10 @@
+services:
+  localstack:
+    image: localstack/localstack:4.4.0
+    ports:
+      - 4566:4566
+    volumes:
+      - "./localstack/init-s3.sh:/etc/localstack/init/ready.d/init-s3.sh:ro"
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      SERVICES: s3

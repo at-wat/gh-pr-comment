@@ -143,6 +143,11 @@ func uploadS3(ctx context.Context, filename string) error {
 		bucketName = bucket
 	}
 
+	var usePathStyle bool
+	if v, ok := os.LookupEnv("AWS_S3_USE_PATH_STYLE"); ok && v == "true" {
+		usePathStyle = true
+	}
+
 	var objectKey string
 	if name, err := uuid.NewRandom(); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
@@ -156,7 +161,9 @@ func uploadS3(ctx context.Context, filename string) error {
 		fmt.Fprintf(os.Stderr, "error: failed to load AWS config: %v\n", err)
 		os.Exit(1)
 	}
-	s3Cli := s3.NewFromConfig(awsCfg)
+	s3Cli := s3.NewFromConfig(awsCfg, func(o *s3.Options) {
+		o.UsePathStyle = usePathStyle
+	})
 	ul := s3manager.NewUploader(s3Cli)
 	out, err := ul.Upload(ctx, &s3.PutObjectInput{
 		ACL:         s3types.ObjectCannedACLPublicRead,
