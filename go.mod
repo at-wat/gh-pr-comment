@@ -15,5 +15,5 @@ require (
 require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/net v0.38.0 // indirect
 )
