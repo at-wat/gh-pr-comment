@@ -1,6 +1,7 @@
 package uploader
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -8,9 +9,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	awsconfig "github.com/aws/aws-sdk-go-v2/config"
+	s3manager "github.com/aws/aws-sdk-go-v2/feature/s3/manager"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	s3types "github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/google/uuid"
 )
@@ -59,10 +62,10 @@ func (u UploaderType) Uploader() Uploader {
 	}
 }
 
-type Uploader func(string) error
+type Uploader func(context.Context, string) error
 
-func (u Uploader) Upload(filename string) error {
-	return u(filename)
+func (u Uploader) Upload(ctx context.Context, filename string) error {
+	return u(ctx, filename)
 }
 
 type imgurResponse struct {
@@ -72,8 +75,8 @@ type imgurResponse struct {
 	} `json:"data"`
 }
 
-func uploadImgur(filename string) error {
-	req, err := http.NewRequest("POST", "https://api.imgur.com/3/image?type=file", nil)
+func uploadImgur(ctx context.Context, filename string) error {
+	req, err := http.NewRequestWithContext(ctx, "POST", "https://api.imgur.com/3/image?type=file", nil)
 	if err != nil {
 		return err
 	}
@@ -114,7 +117,7 @@ func uploadImgur(filename string) error {
 	return nil
 }
 
-func uploadS3(filename string) error {
+func uploadS3(ctx context.Context, filename string) error {
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
@@ -140,13 +143,6 @@ func uploadS3(filename string) error {
 		bucketName = bucket
 	}
 
-	var region string
-	if r, ok := os.LookupEnv("AWS_REGION"); ok {
-		region = r
-	} else if r, ok := os.LookupEnv("AWS_DEFAULT_REGION"); ok {
-		region = r
-	}
-
 	var objectKey string
 	if name, err := uuid.NewRandom(); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
@@ -155,12 +151,15 @@ func uploadS3(filename string) error {
 		objectKey = name.String() + filepath.Ext(filename)
 	}
 
-	sess := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(region),
-	}))
-	ul := s3manager.NewUploader(sess)
-	out, err := ul.Upload(&s3manager.UploadInput{
-		ACL:         aws.String("public-read"),
+	awsCfg, err := awsconfig.LoadDefaultConfig(ctx)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: failed to load AWS config: %v\n", err)
+		os.Exit(1)
+	}
+	s3Cli := s3.NewFromConfig(awsCfg)
+	ul := s3manager.NewUploader(s3Cli)
+	out, err := ul.Upload(ctx, &s3.PutObjectInput{
+		ACL:         s3types.ObjectCannedACLPublicRead,
 		Bucket:      aws.String(bucketName),
 		Key:         aws.String(objectKey),
 		Body:        file,
@@ -176,7 +175,7 @@ func uploadS3(filename string) error {
 	return nil
 }
 
-func uploadTest(filename string) error {
+func uploadTest(ctx context.Context, filename string) error {
 	fmt.Printf("file://%s", filename)
 
 	return nil

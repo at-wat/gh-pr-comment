@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -47,7 +48,7 @@ return: image url
 	}
 
 	u := ut.Uploader()
-	if err := u.Upload(filename); err != nil {
+	if err := u.Upload(context.Background(), filename); err != nil {
 		fmt.Fprintf(os.Stderr, "error: failed to upload: %v\n", err)
 		os.Exit(1)
 	}
