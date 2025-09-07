@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: '${{ needs.get-go-version.outputs.version }}'
       - name: Set path
@@ -125,7 +125,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: '${{ needs.get-go-version.outputs.version }}'
       - name: Post comment
