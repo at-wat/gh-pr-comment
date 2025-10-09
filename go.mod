@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.31.12
 	github.com/aws/aws-sdk-go-v2/feature/s3/manager v1.19.12
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.88.4
-	github.com/gabriel-vasile/mimetype v1.4.9
+	github.com/gabriel-vasile/mimetype v1.4.10
 	github.com/google/go-github/v75 v75.0.0
 	github.com/google/uuid v1.6.0
 	golang.org/x/oauth2 v0.32.0
@@ -32,5 +32,4 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.38.6 // indirect
 	github.com/aws/smithy-go v1.23.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	golang.org/x/net v0.39.0 // indirect
 )
