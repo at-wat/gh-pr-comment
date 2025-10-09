@@ -1,6 +1,6 @@
 module github.com/at-wat/gh-pr-comment
 
-go 1.23.0
+go 1.24.0
 
 toolchain go1.24.4
 
@@ -12,7 +12,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.9
 	github.com/google/go-github/v73 v73.0.0
 	github.com/google/uuid v1.6.0
-	golang.org/x/oauth2 v0.30.0
+	golang.org/x/oauth2 v0.32.0
 )
 
 require (
