@@ -12,7 +12,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.12
 	github.com/google/go-github/v75 v75.0.0
 	github.com/google/uuid v1.6.0
-	golang.org/x/oauth2 v0.32.0
+	golang.org/x/oauth2 v0.34.0
 )
 
 require (
