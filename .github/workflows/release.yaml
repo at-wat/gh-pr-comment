@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Get Go version
         id: go-version
-        run: echo "::set-output name=version::$(sed -n 's/^go \([0-9\.]\+\)/\1/p' go.mod)"
+        run: echo "::set-output name=version::$(sed -n 's/^toolchain go\([0-9\.]\+\)/\1/p' go.mod)"
       - name: Setup Go
         uses: actions/setup-go@v6
         with:
