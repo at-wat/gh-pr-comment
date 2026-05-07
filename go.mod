@@ -2,7 +2,7 @@ module github.com/at-wat/gh-pr-comment
 
 go 1.25.0
 
-toolchain go1.26.1
+toolchain go1.26.3
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.41.5
