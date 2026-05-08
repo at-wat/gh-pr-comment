@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/s3/manager v1.22.12
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.98.0
 	github.com/gabriel-vasile/mimetype v1.4.13
-	github.com/google/go-github/v84 v84.0.0
+	github.com/google/go-github/v86 v86.0.0
 	github.com/google/uuid v1.6.0
 	golang.org/x/oauth2 v0.36.0
 )
