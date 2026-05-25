@@ -109,16 +109,16 @@ options:
 		oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ghToken}),
 	)
 
-	var gh *github.Client
+	cliOpts := []github.ClientOptionsFunc{
+		github.WithHTTPClient(tc),
+	}
 	if ep, customEP := os.LookupEnv("GITHUB_API_URL_BASE"); customEP {
-		var err error
-		gh, err = github.NewEnterpriseClient(ep, ep, tc)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "error: failed to init GitHub client: %v\n", err)
-			os.Exit(1)
-		}
-	} else {
-		gh = github.NewClient(tc)
+		cliOpts = append(cliOpts, github.WithEnterpriseURLs(ep, ep))
+	}
+	gh, err := github.NewClient(cliOpts...)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: failed to init GitHub client: %v\n", err)
+		os.Exit(1)
 	}
 
 	bodyStr := fmt.Sprintf("## %s\n\n%s", title, body)
