@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/go-github/v88/github"
+	"github.com/google/go-github/v91/github"
 	"golang.org/x/oauth2"
 
 	"github.com/at-wat/gh-pr-comment/pkg/cienv"
@@ -158,14 +158,14 @@ options:
 			ctx,
 			env.RepoSlug.Owner, env.RepoSlug.Repo,
 			env.PullRequest,
-			&github.IssueComment{Body: &bodyStr},
+			github.IssueCommentRequest{Body: bodyStr},
 		)
 	} else {
-		_, resp, err = gh.Issues.EditComment(
+		_, resp, err = gh.Issues.UpdateComment(
 			ctx,
 			env.RepoSlug.Owner, env.RepoSlug.Repo,
 			commentID,
-			&github.IssueComment{Body: &bodyStr},
+			github.IssueCommentRequest{Body: bodyStr},
 		)
 	}
 	if err != nil {
