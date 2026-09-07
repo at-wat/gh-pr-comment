@@ -1,6 +1,6 @@
 module github.com/at-wat/gh-pr-comment
 
-go 1.25.0
+go 1.26.0
 
 toolchain go1.27.1
 
@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/s3/manager v1.23.3
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.111.0
 	github.com/gabriel-vasile/mimetype v1.4.15
-	github.com/google/go-github/v88 v88.0.0
+	github.com/google/go-github/v91 v91.0.0
 	github.com/google/uuid v1.6.0
 	golang.org/x/oauth2 v0.36.0
 )
