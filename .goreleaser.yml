@@ -63,7 +63,6 @@ signs:
       - "--detach-sign"
       - "${artifact}"
 release:
-  use_existing_draft: true
   extra_files:
     - glob: ./install.sh
     - glob: ./install.sh.sig
